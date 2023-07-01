@@ -1,21 +1,27 @@
 package com.fwrt.dashboard.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
+
 @Data
-@Entity(name="foodInfo")
+@Table(name="food_info")
+@Entity
 public class FoodInfo {
     @Id
     @Column(name="id")
+    @GeneratedValue(generator="increment")
+    @GenericGenerator(name="increment", strategy = "increment")
     private Long id;
 
-    @Column(name="productName")
+    @Column(name="product_name")
     private String productName;
 
-    @Column(name="expiryDay")
+    @Column(name="expiry_day")
     private int expiryDay;
+
+    @Column(name="category")
+    private String Category;
 
     @Column(name="calorie")
     private int calorie;

@@ -1,28 +1,35 @@
 package com.fwrt.dashboard.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
+
+import java.time.LocalDate;
 import java.util.Date;
 @Data
-@Entity(name="inventory")
+@Table(name="inventory")
+@Entity
 public class Inventory {
     @Id
     @Column(name="id")
+    @GeneratedValue(generator="increment")
+    @GenericGenerator(name="increment", strategy = "increment")
     private Long id;
 
     @Column(name="userId")
     private Long userId;
 
+    @Column(name="category")
+    private String Category;
+
     @Column(name="productName")
     private String productName;
 
     @Column(name="expiryDate")
-    private Date expiryDate;
+    private LocalDate expiryDate;
 
     @Column(name="warningDate")
-    private Date warningDate;
+    private LocalDate warningDate;
 
     @Column(name="quatity")
     private int quatity;

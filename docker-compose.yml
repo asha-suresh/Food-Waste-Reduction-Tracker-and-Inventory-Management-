@@ -1,0 +1,15 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: asha
+      POSTGRES_PASSWORD: Ajas@123
+      POSTGRES_DB: frtracker
+    ports:
+      - 5436:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+volumes:
+  db-data:
