@@ -21,7 +21,7 @@ public class ExpiryDateSuggestionService {
         String category = req.getCategory();
         FoodInfo foodInfo = foodInforepository.getFoodInfoByNameandCategory(productName,category);
 
-        //from database we will get the count of expiry dates , we need to calculate into expiry date from that
+        //from Database we will get the count of expiry dates , we need to calculate into expiry date from that
         LocalDate currentDate = LocalDate.now();
         LocalDate expiryDate= currentDate.plusDays(foodInfo.getExpiryDay());
 

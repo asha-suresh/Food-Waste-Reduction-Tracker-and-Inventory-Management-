@@ -14,8 +14,8 @@ public class FoodInfo {
     @GenericGenerator(name="increment", strategy = "increment")
     private Long id;
 
-    @Column(name="product_name")
-    private String productName;
+    @Column(name="food_name")
+    private String foodName;
 
     @Column(name="expiry_day")
     private int expiryDay;
@@ -27,5 +27,5 @@ public class FoodInfo {
     private int calorie;
 
     @Column(name="protein")
-    private int protein;
+    private double protein;
 }

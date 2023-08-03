@@ -1,0 +1,30 @@
+.notification-banner {
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .notification-drawer {
+    position: relative;
+  }
+  
+  .notification-overlay {
+    position: fixed;
+    top: -100%; /* Initially push the drawer outside the viewport */
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: top 0.3s ease;
+  }
+  
+  .notification-overlay.active {
+    top: 0; /* Slide in the drawer from the top when active */
+  }
+  

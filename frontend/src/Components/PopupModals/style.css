@@ -1,0 +1,184 @@
+/* Add styles for the modal container */
+.modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    z-index: 9999; /* Make sure the modal is above other elements */
+  }
+
+  .modal-area{
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    min-width: 400px;
+  }
+
+  .modal-area-edit-collection{
+    width: 50%;
+  }
+
+  .modal-area-edit-food{
+    width: 30%;
+  }
+
+  .modal-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+  }
+
+  .modal-header-label-section{
+    display: flex;
+    align-items: center;
+    gap:20px;
+    justify-content: space-evenly;
+  }
+  .modal-heading-label{
+    font-size: 24px;
+    font-weight: 500;
+  }
+
+  .modal-header-sub-label{
+    font-size: 26px;
+    font-weight: bolder;
+    opacity: 0.5;
+  }
+  
+  /* Add styles for the modal content */
+  .modal-content {
+    padding: 20px;
+  }
+
+  .faded-text{
+    opacity: 0.7;
+  }
+  
+  /* Add styles for the close button (if you want a close button) */
+  .modal-content button {
+    display: block;
+    margin-top: 10px;
+    background-color: red;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 8px 15px;
+    cursor: pointer;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .modal-footer{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 15px;
+  }
+
+  .modal-footer-with-delete-option{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+  }
+
+  .modal-footer-primary-actions-style{
+    display: flex;
+    align-items: center;
+    gap:15px  
+  }
+
+  .modal-footer-primary-action{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+    background-color: #007bff;
+    border-radius: 5px;
+    padding: 8px 12px;
+    color: white;
+  }
+
+  .modal-footer-close-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+    background-color: red;
+    border-radius: 5px;
+    padding: 8px 12px;
+    color: white;
+  }
+  
+  /* Add styles for the blur effect when the modal is open */
+  /* You can adjust the amount of blur and other properties as per your preference */
+  .modal-container.blur-background {
+    backdrop-filter: blur(5px); /* Add blur effect to the background */
+  }
+  
+  .collection-edit-quick-info{
+    display: flex;
+    justify-content: space-between;
+  }
+  .collection-edit-column1{
+    max-width: 40%;
+  }
+  .collection-name
+  {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap:5px;
+  }
+
+  .invisible-input {
+    min-height: 30px;
+    min-width: 45px; /* Set a minimum height for the input box */
+    padding: 3px 12px; /* Add some padding to make it look like a box */
+    outline: none; /* Remove the default outline when focused */
+    background-color: #f7f7f7; /* Add a background color for better visibility */
+    color: #333; /* Set the text color */
+    font-size: 16px; /* Set the font size */
+    border-radius: 4px; /* Apply rounded corners */
+    cursor: text; /* Set the cursor to a text cursor */
+    line-height: 1.2; /* Set the line-height for better readability */
+    white-space: pre-wrap; /* Allow wrapping of long text */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  }
+  
+
+  .qr-code-area{
+    width:100px;
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+  }
+
+  .qr-code-action-btn{
+    gap:10px;
+    background-color: black;
+    border-radius: 5px;
+    padding: 4px 12px;
+    color: white;
+    font-size: 12px;
+    margin-top: 3px;
+  }
+
+  .qr-code-action-btn:hover{
+    background-color: green;
+  }

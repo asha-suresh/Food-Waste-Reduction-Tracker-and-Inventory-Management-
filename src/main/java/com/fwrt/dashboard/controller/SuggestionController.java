@@ -26,7 +26,6 @@ public class SuggestionController {
     @PostMapping(value ="/api/get/suggestion/expirydate")
     public LocalDate suggestExpiryDate( @RequestBody ExpirydateSuggestionRequest  request){
 
-
         return expiryDateSuggestionService.suggestExpiryDate(request);
     }
 

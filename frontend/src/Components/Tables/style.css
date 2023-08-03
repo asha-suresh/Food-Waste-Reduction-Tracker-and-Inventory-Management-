@@ -1,0 +1,47 @@
+.table-container{
+    width: 100%;
+}
+
+.table-header{
+    display: flex;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+    justify-content: space-between;
+    gap: 30px;
+    height: 45px;
+    font-weight: bold;
+    opacity: 0.6;
+    padding-right: 45px;
+}
+
+.table-row-data{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+.collections-table-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc; /* Add a bottom border */
+    height:40px;
+    gap: 30px;
+    opacity: 0.5;
+}
+
+.table-row-data-with-actions{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.table-body-content{
+    min-height: 300px;
+    height: 300px;
+    overflow-y: auto;
+  /* If you want to hide the horizontal scrollbar (if any) */
+  overflow-x: hidden;
+  /* Add padding to avoid content getting cut off by the scrollbar */
+  padding-right: 5px;
+}
