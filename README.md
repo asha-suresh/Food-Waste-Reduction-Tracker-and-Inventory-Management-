@@ -5,7 +5,7 @@ Food waste is a significant global environmental, social, and economic issue. To
 features:
 Inventory Management
 
-Users will be able to create a digital inventory of the food items they are buying. The app will allow manual entry of items or utilize barcode scanning technology for efficient inventory management. Moreover, the application can suggest expiration dates based on the item type, ensuring users are aware of approaching deadlines. 
+Users will be able to create a digital inventory of the food foodItems they are buying. The app will allow manual entry of foodItems or utilize barcode scanning technology for efficient inventory management. Moreover, the application can suggest expiration dates based on the item type, ensuring users are aware of approaching deadlines. 
 
 
 need a database named inventory  - which will be able to see as a table to the customer 

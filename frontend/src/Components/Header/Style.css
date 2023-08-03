@@ -1,0 +1,83 @@
+.header-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 30px;
+}
+
+.header-title{
+    color: black;
+    font-weight: bolder;
+    font-size: 28px;
+}
+
+.navbaricon{
+    align-items: center;
+    justify-content: center;
+    display: block;
+    width: 40px;
+    height: 40px;
+    padding: auto;
+}
+
+.navbar{
+    width: 25px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 4px;
+    background-color: black;
+}
+
+.navbaricon:hover,
+  .navbaricon:focus {
+    background-color: #FDB90C;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+  }
+
+  .sidebar-logout-btn{
+    background-color:black;
+    border: solid 1px #FDB90C;
+    color: #FDB90C;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: calc(100% - 10px);
+    width:70%;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+
+  }
+
+  .sidebar-logout-btn:hover,
+  .sidebar-logout-btn:focus {
+    background-color: #FDB90C;
+    color: black;
+  }
+
+
+  .sidebar-add-food-btn{
+    background-color:green;
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+    width:70%;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+
+  }
+
+  .sidebar-add-food-btn:hover,
+  .sidebar-add-food-btn:focus {
+    color: white;
+    background-color: black;
+    border: white 1px solid;
+  }
