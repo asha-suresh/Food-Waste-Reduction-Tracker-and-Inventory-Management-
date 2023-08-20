@@ -21,7 +21,7 @@ public class UserController {
     UserService userService;
 
     @PostMapping(value ="/api/create/account")
-    public String registerUser(@RequestBody UserRegistrationDto request){
+    public String registerUser (@RequestBody UserRegistrationDto request){
         return userService.createAccount(request);
     }
 
