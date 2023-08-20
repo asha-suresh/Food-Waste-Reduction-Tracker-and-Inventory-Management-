@@ -1,5 +1,6 @@
 package com.fwrt.dashboard.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
@@ -15,14 +16,21 @@ public class Notifications {
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy = "increment")
     private Long id;
+
     @Column(name = "notification_title")
     private String notificationTitle;
+
     @Column(name = "message")
     private String message;
+
+    @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
-    private Date createdDate;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date createdDate = new Date(System.currentTimeMillis());
+
     @Column(name = "priority")
     private String priority;
+
     @Column(name = "seen_by_user")
     private Boolean readByUser;
 }

@@ -1,18 +1,21 @@
 import React, { useState } from "react";
+
+
 import { useNavigate } from "react-router-dom";
 import "./style.css";
 import LandingPageHeader from "../components/Header/LandingPageHeader";
 import PostRequest from '../Service/PostRequest'
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import GetRequest from "../Service/GetRequest";
 
 const LoginPage = () => {
   const navigate = useNavigate();
 
-  const [username,setUsername ]=useState("")
+  const [username,setUsername ] = useState("")
   const [password,setPassword ]=useState("")
 
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem("isLoggedIn")
-  );
+  const [isLoggedIn, setIsLoggedIn] = useState( localStorage.getItem("isLoggedIn"));
 
   const handleLogin=()=>{
       PostRequest('http://localhost:8080/api/user/login', { userName: username,password:password })
@@ -21,9 +24,16 @@ const LoginPage = () => {
         localStorage.setItem("userid", data.userId);
         localStorage.setItem("inventoryid", data.inventoryId);
         localStorage.setItem("username", data.userName);
+    })
+
+    GetRequest("update/all/foods?userId="+localStorage.getItem("userid"))
+        .then(response=>{
+            if(response){
+              console.log("food items and all are updated")
+            }
+        })
         navigate("/");
-    });
-  }
+  };
 
   return (
     <>
@@ -50,6 +60,7 @@ const LoginPage = () => {
               Login
               <br />
               <br />
+
               <input
                 type="text"
                 name="username"
@@ -57,6 +68,7 @@ const LoginPage = () => {
                 placeholder="Username"
                 value={username} onChange={(e)=>{setUsername(e.target.value)}} required
               ></input>
+
               <br />
               <br />
               <input
@@ -66,6 +78,7 @@ const LoginPage = () => {
                 placeholder="Password"
                 value={password} onChange={(e)=>{setPassword(e.target.value)}} require
               ></input>
+              
               <div className="submit-btn" onClick={handleLogin}>
                 Login
               </div>
@@ -79,6 +92,7 @@ const LoginPage = () => {
             </div>
           </div>
         </div>
+        <ToastContainer closeButton={false}/>
       </div>
     </>
   );

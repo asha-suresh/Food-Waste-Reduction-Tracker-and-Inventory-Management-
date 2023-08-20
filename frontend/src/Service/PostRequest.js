@@ -1,4 +1,6 @@
 import axios from 'axios';
+import {toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 async function PostRequest(url = '', data = {}) {
   try {
@@ -7,12 +9,20 @@ async function PostRequest(url = '', data = {}) {
         'Content-Type': 'application/json',
       },
     });
-    return response.data; // returns the parsed JSON response
+    
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      // Display a toast for non-200 response
+      toast.error('Server returned an error. Please try again later.');
+    }
+
   } catch (error) {
     // Handle any errors that occur during the request
-    console.error('Error in postData:', error);
-    throw error; // Rethrow the error to be handled by the calling function
+    console.error('Error in postData:', error); 
+    toast.error('An error occurred. Please try again later.');
   }
 }
+
 
 export default PostRequest;

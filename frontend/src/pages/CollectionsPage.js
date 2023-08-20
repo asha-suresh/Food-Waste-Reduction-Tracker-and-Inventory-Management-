@@ -23,7 +23,7 @@ const CollectionsPage = ( {setActivePath} ) => {
 
 
   useEffect(() => {
-    setActivePath("cart");
+    setActivePath("Collections");
     //eslint-disable-next-line
     const inventoryid= localStorage.getItem("inventoryid");
 
@@ -33,13 +33,13 @@ const CollectionsPage = ( {setActivePath} ) => {
               setcollectionsList(response)
             }
         })
-  }, []);
+  }, [isCollectionCreationModalOpen]);
 
 
   return (
     <div className="outlet-container">
       <div className="cart-page-header-actions">
-        <div className="card-page-add-new-cart" onClick={handleOpenModal}> <FaPlus/> New cart</div>
+        <div className="card-page-add-new-cart" onClick={handleOpenModal}> <FaPlus/> New collection</div>
       </div>
       <CreateNewCollectionPopup isCollectionCreationModalOpen={isCollectionCreationModalOpen} onClose={handleCloseModal}/>
 

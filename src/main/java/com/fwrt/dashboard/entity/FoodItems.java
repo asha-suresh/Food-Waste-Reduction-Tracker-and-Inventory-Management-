@@ -1,5 +1,6 @@
 package com.fwrt.dashboard.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
@@ -16,24 +17,47 @@ public class FoodItems {
     @GenericGenerator(name="increment", strategy = "increment")
     private Long id;
 
-    @Column(name="category")
-    private String Category;
-
     @Column(name="food_name")
     private String foodName;
 
-    @Column(name="expiry_date")
-    private LocalDate expiryDate;
+    @Column(name="category")
+    private String Category;
 
+    @Temporal(TemporalType.DATE)
+    @Column(name="expiry_date")
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date expiryDate;
+
+    @Temporal(TemporalType.DATE)
     @Column(name="warning_date")
-    private LocalDate warningDate;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date warningDate;
 
     @Column(name="quantity")
     private int quantity;
 
-    @Column(name="updated_date")
-    private Date updatedDate = new Date();
+    @Column(name="consumed_quantity")
+    private int consumedQuantity;
 
+    @Temporal(TemporalType.DATE)
+    @Column(name="updated_date")
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date updatedDate = new Date(System.currentTimeMillis());
+
+    @Temporal(TemporalType.DATE)
     @Column(name="created_date")
-    private Date createdDate = new Date();
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date createdDate = new Date(System.currentTimeMillis());
+
+    @Column(name="user_id", nullable = false)
+    private Long userId;
+
+    @Column(name="status") // for showing expiry info , values are {safe,warning,expired}
+    private String status;
+
+    @Column(name = "is_warning_notified")
+    private Boolean warningNotified;
+
+    @Column(name = "is_expiry_notified")
+    private Boolean expiryNotified;
 }

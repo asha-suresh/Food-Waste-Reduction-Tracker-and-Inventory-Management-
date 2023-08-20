@@ -2,7 +2,6 @@ import React , { useEffect, useState } from 'react'
 
 import { useNavigate } from "react-router-dom";
 import "./style.css";
-import AddFoodShowCollectionsPopup from "../PopupModals/AddFoodShowCollectionsPopup";
 
 const Sidebar = ({ activePath }) => {
   const navigate = useNavigate();
@@ -24,7 +23,10 @@ const Sidebar = ({ activePath }) => {
   };
 
   return (
+    <div>
+
     <div className="sidebar">
+
 
           <div className="top_section" >
                    <h1 style={{display: "block", alignItems: "center"}} className="logo" >FWRT</h1>
@@ -35,7 +37,7 @@ const Sidebar = ({ activePath }) => {
 
       <div
         className={`sidebar-menu ${
-          activePath === "dashboard" ? "sidebar-menu-select" : ""
+          activePath === "Dashboard" ? "sidebar-menu-select" : ""
         }`}
         onClick={() => {
           navigate("/");
@@ -45,7 +47,7 @@ const Sidebar = ({ activePath }) => {
       </div>
       <div
         className={`sidebar-menu ${
-          activePath === "inventory" ? "sidebar-menu-select" : ""
+          activePath === "Inventory" ? "sidebar-menu-select" : ""
         }`}
         onClick={() => {
           navigate("/inventory");
@@ -55,7 +57,7 @@ const Sidebar = ({ activePath }) => {
       </div>
       <div
         className={`sidebar-menu ${
-          activePath === "cart" ? "sidebar-menu-select" : ""
+          activePath === "Collections" ? "sidebar-menu-select" : ""
         }`}
         onClick={() => {
           navigate("/cart");
@@ -63,16 +65,27 @@ const Sidebar = ({ activePath }) => {
       >
         Collections
       </div>
+      <div
+        className={`sidebar-menu ${
+          activePath === "Donations" ? "sidebar-menu-select" : ""
+        }`}
+        onClick={() => {
+          navigate("/donations");
+        }}
+      >
+        Donations
+      </div>
       <br/>
       <br/>
       <br/>
       <br/>
-      <div className="sidebar-add-food-btn" onClick={handleOpenModal}>Add Food Item</div>
-
-      <AddFoodShowCollectionsPopup isAddNewFoodModalOpen={isAddNewFoodModalOpen} onClose={handleCloseModal}/>
-
+      <div className="sidebar-add-food-btn" onClick={() => {
+                                            navigate("/add/food");
+                                            }}>Add Food Item</div>
       <div className="sidebar-logout-btn" onClick={handleLogout}>Logout</div>
-    </div>
+
+    </div>    </div>
+
   );
 };
 

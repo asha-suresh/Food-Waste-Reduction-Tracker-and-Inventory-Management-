@@ -1,12 +1,11 @@
 package com.fwrt.dashboard.service;
 
-import com.fwrt.dashboard.entity.Collections;
-import com.fwrt.dashboard.entity.Inventory;
-import com.fwrt.dashboard.entity.User;
+import com.fwrt.dashboard.entity.*;
 import com.fwrt.dashboard.repository.InventoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -24,7 +23,6 @@ public class InventoryService {
 
     public Inventory createinventory(User user){
         Inventory inventory = new Inventory();
-        inventory.setTotalItems(0);
         inventory.setId(generateId());
         inventoryRepository.save(inventory);
         return inventory;
@@ -42,6 +40,7 @@ public class InventoryService {
     public String deleteCollectionByid( Long inventoryId, Long collection_id) {
         Optional<Inventory> inventory = inventoryRepository.findById(inventoryId);
         Collections collection =foodCollectionService.viewCollectionbyId(collection_id);
+        foodCollectionService.deletedFoodItems(collection.getId());
         inventory.get().getCollections().remove(collection);
         inventoryRepository.save(inventory.get());
         return "Collection deleted successfully";
@@ -54,10 +53,7 @@ public class InventoryService {
     }
 
 
-
-
-
-    public long generateId(){
+    private long generateId(){
         return  inventoryRepository.getInventoryCount() +1;
 
     }

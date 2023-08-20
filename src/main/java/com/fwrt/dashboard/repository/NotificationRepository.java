@@ -14,9 +14,11 @@ public interface NotificationRepository extends JpaRepository<Notifications, Lon
     @Modifying
     @Transactional
     @Query(value = "update Notifications n set n.readByUser = true where n.id = :notification_id")
-    Long updateNotificationReadStatus(@Param("notification_id") Long notification_id);
+    void updateNotificationReadStatus(@Param("notification_id") Long notification_id);
 
 
-//    Notifications generateExpiryDateWarningNotifications(@Param("userid")Long userid);
+    @Query (value = "SELECT COUNT(*) as count FROM notifications", nativeQuery = true)
+    Integer getAllNotificationsCount();
+
 }
 

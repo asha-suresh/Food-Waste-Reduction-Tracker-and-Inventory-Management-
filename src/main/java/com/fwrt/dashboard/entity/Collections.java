@@ -1,5 +1,6 @@
 package com.fwrt.dashboard.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
@@ -21,11 +22,15 @@ public class Collections {
     @Column(name = "collection_name")
     private String collectionName;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "updated_date")
-    private Date updatedDate = new Date();
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date updatedDate = new Date(System.currentTimeMillis());
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
-    private Date createdDate = new Date();
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date createdDate = new Date(System.currentTimeMillis());
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(

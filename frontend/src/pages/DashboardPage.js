@@ -1,17 +1,43 @@
 import React, { useEffect, useState } from "react";
 import './style.css'
+import { Chart } from "react-google-charts";
+
 
 const DashboardPage = ({ setActivePath }) => {
 
   useEffect(() => {
-    setActivePath("dashboard");
+    setActivePath("Dashboard");
   }, []);
+
+  const data = [
+    ["Year", "Sales", "Expenses"],
+    ["2004", 1000, 400],
+    ["2005", 1170, 460],
+    ["2006", 660, 1120],
+    ["2007", 1030, 540],
+  ];
+
+  const options = {
+    title: "Company Performance",
+    curveType: "function",
+    legend: { position: "bottom" },
+  };
 
 
   return (
     <div className="outlet-container">
       <div className="graphical-area">
-        <div className="graph"></div>
+        <div className="graph">
+        <Chart
+          chartType="LineChart"
+          width="100%"
+          height="300px"
+          data={data}
+          options={options}
+        />
+
+
+        </div>
         <div className="dashboard-column-2">
           <div className="dashboard-info-row"></div>
           <div className="dashboard-column-3">

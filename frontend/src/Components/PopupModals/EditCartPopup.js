@@ -1,6 +1,7 @@
 import React , { useState,useEffect } from 'react'
 import './style.css'
-import { FaClosedCaptioning, FaEdit, FaExclamationCircle, FaEye, FaPen, FaPencilAlt, FaSave } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { FaPencilAlt, FaSave } from "react-icons/fa";
 import CollectionsQuickInfoTable from '../Tables/CollectionsQuickInfoTable';
 import QRCode from 'react-qr-code';
 import GetRequest from '../../Service/GetRequest';
@@ -8,14 +9,14 @@ import GetRequest from '../../Service/GetRequest';
 
 
 const EditCartPopup = ({ isOpen, onClose, collectionid, collectionName, createdDate, updatedDate, items}) => {
-    
+    const navigate = useNavigate();
+
     const deleteCollection = () => {
          const inventoryid= localStorage.getItem("inventoryid");
           GetRequest("remove/collection?inventory_id="+inventoryid+"&collection_id="+collectionid)
               .then(response=>{
                     onClose();
-                    alert(response);
-
+                    navigate("/cart");
               })
       };
     

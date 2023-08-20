@@ -1,5 +1,6 @@
 package com.fwrt.dashboard.service;
 
+import com.fwrt.dashboard.dto.CategoryFoodItemCountDTO;
 import com.fwrt.dashboard.dto.ProductCreationRequest;
 import com.fwrt.dashboard.entity.FoodItems;
 import com.fwrt.dashboard.entity.Collections;
@@ -15,7 +16,6 @@ public class FoodCollectionService {
 
     @Autowired
     FoodProductService foodProductService;
-
 
     public Collections createNewCollection(String collectionName) {
         Collections collections = new Collections();
@@ -39,11 +39,11 @@ public class FoodCollectionService {
         return "not saved";
     }
 
-    public String addFoodItemsToExistingCollection(ProductCreationRequest request, Long collection_id) {
+    public String addFoodItemsToExistingCollection(ProductCreationRequest request, Long collection_id, Long userId) {
         Optional <Collections> collections =collectionsRepository.findById(collection_id);
         if(collections!=null) {
             Set<FoodItems> foodItemsSet = collections.get().getItems();
-            FoodItems foodItems = foodProductService.addProduct(request);
+            FoodItems foodItems = foodProductService.addProduct(request,userId);
             foodItemsSet.add(foodItems);
             collections.get().setItems(foodItemsSet);
             collectionsRepository.save(collections.get());
@@ -52,10 +52,12 @@ public class FoodCollectionService {
         return "not saved";
     }
 
-    public String deleteCollectionByid( Long collection_id) {
-        Optional <Collections> collections =collectionsRepository.findById(collection_id);
-        collectionsRepository.delete(collections.get());
-        return "deleted successfully";
+    public String deletedFoodItems( Long collectionId) {
+        Optional<Collections> foodCollection = collectionsRepository.findById(collectionId);
+        List<FoodItems> foodItemsList = foodCollection.get().getItems().stream().toList();
+        foodCollection.get().getItems().removeAll(foodItemsList);
+        collectionsRepository.save(foodCollection.get());
+        return foodProductService.removeItems(foodItemsList);
     }
 
 
@@ -69,6 +71,14 @@ public class FoodCollectionService {
         collections.get().getItems().remove(foodProductService.findFoodItemById(foodItemId));
         collectionsRepository.save(collections.get());
         return "food item removed successfully";
+    }
+
+    public CategoryFoodItemCountDTO getCategoryFoodItemCount(Long userId){
+        return foodProductService.getCategoryFoodItemCount(userId);
+    }
+
+    public List<FoodItems> viewAllFoodItems(Long userId) {
+        return foodProductService.viewAllFoodItems(userId);
     }
 
 

@@ -3,13 +3,18 @@ package com.fwrt.dashboard.service;
 import com.fwrt.dashboard.dto.UserLoginRequest;
 import com.fwrt.dashboard.dto.UserLoginResponse;
 import com.fwrt.dashboard.dto.UserRegistrationDto;
+import com.fwrt.dashboard.entity.FoodItems;
 import com.fwrt.dashboard.entity.Inventory;
+import com.fwrt.dashboard.entity.Notifications;
 import com.fwrt.dashboard.entity.User;
+import com.fwrt.dashboard.repository.NotificationRepository;
 import com.fwrt.dashboard.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -22,31 +27,19 @@ public class UserService {
     InventoryService inventoryService;
 
 
-    //crud
-    //login logout
-    //forget reset
-
    public String createAccount(UserRegistrationDto request){
-
        User user = new User();
        user.setId(generateId());
        user.setUserName(request.getUserName());
        user.setEmail(request.getEmail());
        user.setPassword(request.getPassword());
        user.setCreatedDate(new Date());
-       user.setModifiedDate(new Date());
-       user.setVerified(Boolean.TRUE);
        user.setInventory(inventoryService.createinventory(user));
        userRepository.save(user);
-
-
-
-
-
-
-
        return "success";
    }
+
+
    public Optional<User> retriveUserById(Long id){
        return userRepository.findById(id);
    }
@@ -61,11 +54,11 @@ public class UserService {
     }
 
 
-
-    public Inventory retriveInventoryByUserId(Long id){
-        Optional<User> user= retriveUserById(id);
-        Inventory inventory = user.get().getInventory();
-        return inventory;
+    public String updateFoodItemsAndNotifications(Long userId, List<Notifications> notifications) {
+        Optional<User> user = retriveUserById(userId);
+        user.get().getNotifications().addAll(notifications);
+        userRepository.save(user.get());
+        return "saved sucessfully";
     }
 
 
@@ -74,11 +67,10 @@ public class UserService {
     return "saved sucessfully";
     }
 
-    public long generateId(){
+    private long generateId(){
         return  userRepository.getAllUsersCount() +1;
 
     }
-
 
 
 }

@@ -1,25 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './style.css'
 import {FaPencilAlt, FaSave } from "react-icons/fa";
 import PostRequest from '../../Service/PostRequest';
+import AddFoodPopup from "./AddFoodPopup";
 
 
 
 
-const CreateNewCollectionPopup = ({ isCollectionCreationModalOpen, onClose}) => {
+const CreateNewCollectionPopup = ({ isCollectionCreationModalOpen, onClose }) => {
 
     //for creating new collection
     const [collectionName,setCollectionName ]=useState("")
 
     const [inventoryid,setInventoryid ]=useState(localStorage.getItem("inventoryid"));
+    const [collectionId,setCollectionid ]=useState();
+
+
+    const [isAddNewFoodModalOpen, setIsAddNewFoodModalOpen] = useState(false);
+
+
+     const handleAddFoodPopupModalOpen = () => {
+       setIsAddNewFoodModalOpen(true);
+
+     };
+ 
+     const handleAddFoodsPopupCloseModal = () => {
+       setIsAddNewFoodModalOpen(false);
+       onClose();
+     };
 
 
     const createNewCollection=()=>{
     PostRequest('http://localhost:8080/api/new/collection?inventory_id='+inventoryid, { collectionName: collectionName})
       .then(data => {
+        setCollectionid(data);
           console.log(data,"collection created successfully");
-      });
+          handleAddFoodPopupModalOpen();
+               });
     }
+
+    useEffect(()=>{},[isAddNewFoodModalOpen]);
 
 
     if (!isCollectionCreationModalOpen) return null;
@@ -34,6 +54,8 @@ const CreateNewCollectionPopup = ({ isCollectionCreationModalOpen, onClose}) => 
                         <div className="modal-header-sub-label"></div>
                     </div>
                 </div>
+                <AddFoodPopup isAddNewFoodModalOpen={isAddNewFoodModalOpen} onAddFoodPopupClose={handleAddFoodsPopupCloseModal} collectionId={collectionId}/>
+
                 <hr/>
                 <div className="modal-content">
                                 <button className="modal-close" onClick={onClose}>
@@ -41,17 +63,15 @@ const CreateNewCollectionPopup = ({ isCollectionCreationModalOpen, onClose}) => 
                                 </button>
                     
                     <div className="collection-edit-quick-info">
-                        <div className="collection-edit-column1">
                             <div className="collection-name">
-                                    <div className="collection-name-label">Name :</div>
-                                    <input
+                                    Collection Name:<input
                                             type="text"
                                             name="Collection Name"
                                             placeholder="Enter Collection Name"
+                                            className="custom-input"
                                             value={collectionName} onChange={(e)=>{setCollectionName(e.target.value)}} require
                                     ></input>
                             </div>
-                        </div>
                     </div>
 
                     <br/>

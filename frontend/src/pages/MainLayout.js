@@ -31,7 +31,7 @@ const MainLayout = ({activePath}) => {
     <div className="main-layout">
       <Sidebar activePath={activePath} />
       <div className="main-component">
-          <DashboardPageHeader />
+          <DashboardPageHeader activePath={activePath} />
           <Outlet />
       </div>
     </div>

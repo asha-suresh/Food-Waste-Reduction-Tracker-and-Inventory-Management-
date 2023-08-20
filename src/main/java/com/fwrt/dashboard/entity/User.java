@@ -1,10 +1,10 @@
 package com.fwrt.dashboard.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,18 +18,20 @@ public class User {
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy = "increment")
     private Long id;
+
     @Column(name = "user_name")
     private String userName;
+
     @Column(name = "email")
     private String email;
+
     @Column(name = "password")
     private String password;
+
+    @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
-    private Date createdDate;
-    @Column(name = "modified_date")
-    private Date modifiedDate;
-    @Column(name = "verified")
-    private Boolean verified;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date createdDate = new Date(System.currentTimeMillis());
 
     @OneToOne
     @JoinColumn(name = "inventory_id")

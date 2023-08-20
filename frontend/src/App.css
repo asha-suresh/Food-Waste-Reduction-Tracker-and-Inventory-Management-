@@ -17,9 +17,9 @@ main{
     background-color: #F8F8F8;
 }
 .main-component{
-    width: 84%;
+    width: 85%;
     min-height: 100vh;
-    margin-left: 16%;
+    margin-left: 18%;
     margin-right: 25px;
     background-color: #F8F8F8;
 
@@ -27,8 +27,8 @@ main{
 
 .outlet-container{
     padding: 10px 30px;
-    width: 98%;
-    margin-left: auto;
+    width: 92%;
+    margin-left: 20px;
     margin-right: auto;
 }
 

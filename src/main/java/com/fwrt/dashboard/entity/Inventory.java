@@ -16,9 +16,6 @@ public class Inventory {
     @Column(name="id")
     private Long id;
 
-    @Column(name="total_items")
-    private int totalItems;
-
     @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(
             name = "inventory_collections",
