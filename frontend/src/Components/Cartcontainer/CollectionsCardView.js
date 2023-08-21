@@ -1,4 +1,4 @@
-import React , { useEffect, useState } from 'react'
+import React , {useState } from 'react'
 import AddFoodPopup from '../PopupModals/AddFoodPopup';
 
 const CollectionsCardView = ({id, createdDate, items, collectionName, updatedDate}) => {
@@ -6,7 +6,6 @@ const CollectionsCardView = ({id, createdDate, items, collectionName, updatedDat
 
      const handleAddFoodPopupModalOpen = () => {
        setIsAddNewFoodModalOpen(true);
-
      };
  
      const handleAddFoodsPopupCloseModal = () => {
@@ -15,18 +14,14 @@ const CollectionsCardView = ({id, createdDate, items, collectionName, updatedDat
      };
 
   return (
-    <div className="cart" >
-    <div className="cart-header">
-
-</div>
-
-    <div className="cart-content">
-        <div className="food-item-name" onClick={handleAddFoodPopupModalOpen}>{collectionName}</div>
-        <div className="purchased-quantity">{items.size}</div>
+    <div className="collections-card-view" >
+      <br/>
+    <div className="cart-content" onClick={handleAddFoodPopupModalOpen}>
+        <div className="food-item-name">{collectionName}</div>
     </div>
     <AddFoodPopup isAddNewFoodModalOpen={isAddNewFoodModalOpen} onAddFoodPopupClose={handleAddFoodsPopupCloseModal} collectionId={id}/>
 
-    <div className="cart-footer">Expire on {createdDate}</div>
+    <div className="cart-footer">Created on {createdDate}</div>
 </div> 
   )
 }

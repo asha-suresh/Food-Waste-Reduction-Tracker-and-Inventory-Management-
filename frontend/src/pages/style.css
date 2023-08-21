@@ -33,6 +33,34 @@
     margin-bottom: 25px;
 
 }
+.info-small-box{
+    width: 10px;
+    height: 10px;
+    background-color: #FDB90C;
+}
+
+.red-box{
+    background-color: red;
+}
+
+.green-box{
+    background-color: green;
+}
+.area-flex{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap:10px;
+    font-size: 18px;
+}
+.bold-text{
+    font-weight: bold;
+    color: darkblue;
+}
+
+.food-status-quick-info-container{
+    padding: 20px 20px;
+}
 
 .slogen1{
     font-size: 30px;
@@ -47,7 +75,22 @@
     height: 3px;
     border-radius: 1px;
 }
+.Total-food-items-count{
+    font-size: 24px;
+    padding: 30px;
+}
 
+.total-food-varieties{
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap:30px;
+    padding: 0px 30px;
+    opacity: 0.6;
+    color: darkblue;
+}
 .slogen2{
     font-weight:lighter;
 }
@@ -174,21 +217,31 @@ width: 100%;  }
 }
 
 .add-food-info-column{
-    background-color: white;
     width: 25%;
     height: 500px;
 }
-
+.centralise-text{
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    font-size: 16px;
+    font-weight: bold;
+}
 .add-food-form-container{
     background-color: white;
     width: 70%;
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+
 }
 
 .dotted-border-contaner{
-    width: 85%;
-    border: grey dashed 2px;
+    width:80%;
+    border: rgb(177, 177, 177) dashed 2px;
     height:150px;
-    padding: 10px;
+    padding: 30px;
     margin-top: 20px;
     margin-bottom: 20px;
     margin-left: auto;

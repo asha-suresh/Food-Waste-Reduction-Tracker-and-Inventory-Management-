@@ -1,7 +1,9 @@
 package com.fwrt.dashboard.service;
 
 import com.fwrt.dashboard.dto.CategoryFoodItemCountDTO;
+import com.fwrt.dashboard.dto.InventoryAnalyticsDTO;
 import com.fwrt.dashboard.dto.ProductCreationRequest;
+import com.fwrt.dashboard.dto.StatusCountDTO;
 import com.fwrt.dashboard.entity.FoodItems;
 import com.fwrt.dashboard.entity.Collections;
 import com.fwrt.dashboard.repository.CollectionsRepository;
@@ -66,15 +68,30 @@ public class FoodCollectionService {
         return collections.get();
     }
 
-    public String removeItemsfromCollections(Long foodItemId,Long collection_id) {
-        Optional <Collections> collections =collectionsRepository.findById(collection_id);
-        collections.get().getItems().remove(foodProductService.findFoodItemById(foodItemId));
+    public String removeItemsfromCollections(Long foodItemId) {
+        Long collectionId = collectionsRepository.getCollectionsDetailsfromFoodId(foodItemId);
+        Optional <Collections> collections =collectionsRepository.findById(collectionId);
+        Optional<FoodItems> fooditem = foodProductService.findFoodItemById(foodItemId);
+        collections.get().getItems().remove(fooditem.get());
         collectionsRepository.save(collections.get());
+        foodProductService.removeItem(foodItemId);
         return "food item removed successfully";
+    }
+
+    public InventoryAnalyticsDTO generateAnalytics(Long userId){
+        return foodProductService.generateFoodItemsCountAnalytics(userId);
     }
 
     public CategoryFoodItemCountDTO getCategoryFoodItemCount(Long userId){
         return foodProductService.getCategoryFoodItemCount(userId);
+    }
+
+    public StatusCountDTO getCountByStatus(Long userId) {
+        return foodProductService.getCountByStatus(userId);
+    }
+
+    public String consumeFood(Long foodId){
+        return foodProductService.consumeFood(foodId);
     }
 
     public List<FoodItems> viewAllFoodItems(Long userId) {

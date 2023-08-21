@@ -8,5 +8,6 @@ public class CategoryFoodItemCountDTO {
     private Long vegetables;
     private Long cannedFoods;
     private Long juices;
+    private Long snacks;
     private Long others;
 }

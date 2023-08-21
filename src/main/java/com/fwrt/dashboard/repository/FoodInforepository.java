@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FoodInforepository extends JpaRepository<FoodInfo,Long> {
 
-    @Query( value = "SELECT * FROM food_info f WHERE f.food_name  = :name", nativeQuery = true)
+    @Query( value = "SELECT * FROM food_info f WHERE f.food_name ILIKE :name", nativeQuery = true)
     FoodInfo getFoodInfoByNameandCategory(@Param("name")String name);
 
 }

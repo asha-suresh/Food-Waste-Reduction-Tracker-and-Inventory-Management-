@@ -1,6 +1,7 @@
 package com.fwrt.dashboard.repository;
 
 import com.fwrt.dashboard.dto.CategoryFoodItemCountDTO;
+import com.fwrt.dashboard.dto.StatusCountDTO;
 import com.fwrt.dashboard.entity.FoodItems;
 import com.fwrt.dashboard.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,5 +25,18 @@ public interface ItemRepository extends JpaRepository<FoodItems, Long> {
     @Query(value = "SELECT f.category, COUNT(f.id) " +
             "FROM food_items f WHERE f.user_id = :userid GROUP BY f.category", nativeQuery = true)
     List<Object[]> getCategoryFoodItemCountByUserId(@Param("userid") Long userId);
+
+
+    @Query(value =
+            "SELECT " +
+                    "SUM(CASE WHEN f.status = 'safe' THEN 1 ELSE 0 END) as safeCount, " +
+                    "SUM(CASE WHEN f.status = 'donated' THEN 1 ELSE 0 END) as donatedCount, " +
+                    "SUM(CASE WHEN f.status = 'consumed' THEN 1 ELSE 0 END) as consumedCount, " +
+                    "SUM(CASE WHEN f.status = 'expired' THEN 1 ELSE 0 END) as expiredCount, " +
+                    "SUM(CASE WHEN f.status = 'warning' THEN 1 ELSE 0 END) as warningCount " +
+                    "FROM food_items f WHERE f.user_id = :userid",
+            nativeQuery = true)
+    List<Object[]> getStatusCounts(@Param("userid") Long userId);
+
 
 }

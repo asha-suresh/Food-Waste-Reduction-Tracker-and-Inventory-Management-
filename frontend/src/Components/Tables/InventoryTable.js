@@ -30,10 +30,14 @@ const fetchFoodItems= async ()=>{
                 <div className="table-column-title">Name</div>
                 <div className="table-column-title">Category</div>
                 <div className="table-column-title">Quantity</div>
-                <div className="table-column-title">Quantity Left</div>
+                <div className="table-column-title">Items Left</div>
                 <div className="table-column-title">Added on</div>
                 <div className="table-column-title">Expires on</div>
                 <div className="table-column-title">Status</div>
+                <div className="table-column-title">Actions</div>
+                <div className="table-column-title">Consume</div>
+
+
             </div>
             <div className="table-body-content">
     

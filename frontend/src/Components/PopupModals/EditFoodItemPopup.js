@@ -18,24 +18,48 @@ const EditFoodItemPopup = ({ isEditFoodItemPopupOpen, onEditFoodItemPopupClose }
                 <hr/>
                 <div className="modal-content">
                     <div className="collection-edit-quick-info">
-                        <div className="collection-edit-column1">
-                            <div className="collection-name">
+                        <div className="collection-edit-column2">
+                        <div className="collection-name">
                                     <div className="collection-name-label">Name :</div>
-                                    <div class="invisible-input" contenteditable="true">Fridge</div>
-                            </div>
-                            <div className="collection-name">
+                                    <input
+                                        type="text"
+                                        name="Food Item Name"
+                                        placeholder="Enter Food item name"
+                                        className="custom-input"
+                                        >
+                                    </input>
+                        </div>
+                        <div className="collection-name">
+                                    <div className="collection-name-label">Category :</div>
+                                    <input
+                                        type="text"
+                                        name="Food Item Name"
+                                        placeholder="Enter Food item name"
+                                        className="custom-input"
+                                        >
+                                    </input>
+                        </div>
+                        <div className="collection-name">
                                     <div className="collection-name-label">Quantity :</div>
-                                    <div class="invisible-input" contenteditable="true">Fridge</div>
-                            </div>
-                            <div className="collection-name">
-                                    <div className="collection-name-label">Added Date :</div>
-                                    <div class="invisible-input" contenteditable="true">Fridge</div>
-                            </div>
-                            <div className="collection-name">
+                                    <input
+                                        type="text"
+                                        name="Food Item Name"
+                                        placeholder="Enter Food item name"
+                                        className="custom-input"
+                                        >
+                                    </input>
+                        </div>
+                        <div className="collection-name">
                                     <div className="collection-name-label">Expiry Date :</div>
-                                    <div class="invisible-input" contenteditable="true">Fridge</div>
-                            </div>
-                            <div className="collection-name-label faded-text">Created on 13/7/1998</div>
+                                    <input
+                                        type="text"
+                                        name="Food Item Name"
+                                        placeholder="Enter Food item name"
+                                        className="custom-input"
+                                        >
+                                    </input>
+                        </div>
+                           
                             <div className="collection-name-label faded-text">Last updated on 26/9/1998</div>
 
                         </div>

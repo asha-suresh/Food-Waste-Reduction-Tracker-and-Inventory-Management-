@@ -1,7 +1,7 @@
 package com.fwrt.dashboard.controller;
 
 import com.fwrt.dashboard.dto.CollectionCreationRequest;
-import com.fwrt.dashboard.dto.UserRegistrationDto;
+import com.fwrt.dashboard.dto.InventoryAnalyticsDTO;
 import com.fwrt.dashboard.entity.Collections;
 import com.fwrt.dashboard.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +29,10 @@ public class InventoryController {
     @GetMapping(value ="/api/all/collections")
     public List<Collections> viewAllCollections(@RequestParam Long inventory_id) {
         return inventoryService.viewAllCollections(inventory_id);
+    }
+
+    @GetMapping(value ="/api/inventory/analytics")
+    public InventoryAnalyticsDTO getInventoryQuickAnalytics(@RequestParam Long userId ,@RequestParam Long inventory_id) {
+        return inventoryService.getInventoryAnalytics(userId,inventory_id);
     }
 }

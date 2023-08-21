@@ -52,7 +52,7 @@ public class FoodItems {
     @Column(name="user_id", nullable = false)
     private Long userId;
 
-    @Column(name="status") // for showing expiry info , values are {safe,warning,expired}
+    @Column(name="status") // for showing expiry info , values are {safe,warning,expired,consumed}
     private String status;
 
     @Column(name = "is_warning_notified")

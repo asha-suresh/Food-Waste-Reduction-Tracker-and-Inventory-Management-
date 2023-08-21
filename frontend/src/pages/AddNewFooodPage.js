@@ -1,6 +1,6 @@
 import React , { useEffect, useState } from 'react'
 import './style.css'
-import {FaPencilAlt, FaSave } from "react-icons/fa";
+import {FaPencilAlt, FaPlusCircle } from "react-icons/fa";
 import GetRequest from '../Service/GetRequest';
 import CollectionsCardView from '../components/Cartcontainer/CollectionsCardView';
 import CreateNewCollectionPopup from '../components/PopupModals/CreateNewCollectionPopup';
@@ -46,31 +46,27 @@ const AddNewFooodPage = () => {
 
             <div className="graphical-area">
                 <div className="add-food-form-container">
+                <br/>
                 <div className="modal-header-label-section">
-                        <div className="modal-header-action-icon"><FaPencilAlt /></div>
-                        <div className="modal-heading-label">Add Food Item</div>
-                       <div className="modal-header-sub-label"></div>
+                        <div className="modal-header-action-icon"><FaPencilAlt /> Add Food Item</div>
                     </div>
-                        <hr/>
+                        <br/>
                         <div className="dotted-border-contaner">
-                            A food item can be added only inside a collection.
-                            <br/>
-                            You can either choose an existing collection or create new one.
+                        <div className="centralise-text">A food item can be added only inside a collection.</div>
                             <br/>
                             <br/>
 
-                            <div className="modal-footer-primary-action"onClick={handleOpenModal}><FaSave/>
+                            <div className="sidebar-add-food-btn"onClick={handleOpenModal}><FaPlusCircle/> 
                                         Create New Collection
                                         </div>
                         </div>
-                        <br/>
                         <CreateNewCollectionPopup isCollectionCreationModalOpen={isCollectionCreationModalOpen} onClose={handleCloseModal}/>
 
                     <div className="modal-content">
-                        OR
+                    <div className="centralise-text">OR</div>
                         <br/>
-                        Choose a collection
-
+                        <div className="centralise-text">Choose a collection
+                        </div>
                         <div className="cards-container">
                             {collectionsList.map((collection)=>
                             <CollectionsCardView key={collection.id} {...collection}/>

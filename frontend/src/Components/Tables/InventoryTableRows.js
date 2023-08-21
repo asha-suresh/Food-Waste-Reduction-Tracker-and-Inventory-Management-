@@ -1,6 +1,39 @@
 import React from 'react'
+import { FaDonate, FaEdit, FaTrash } from 'react-icons/fa'
+import GetRequest from '../../Service/GetRequest';
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
-const InventoryTableRows = ({slno,foodName,category,quantity,consumedQuantity,updatedDate,expiryDate,status}) => {
+
+const InventoryTableRows = ({slno,id,foodName,category,quantity,consumedQuantity,updatedDate,expiryDate,status}) => {
+    const userID = localStorage.getItem("userid");
+    const consumeFood=()=>{
+         GetRequest('consume/food?foodId='+id)
+          .then(data => {
+              console.log(data)});
+              toast.success("Food item has been consumed!", {
+                position: toast.POSITION.TOP_RIGHT
+              });
+            }
+
+    const removeFood=()=>{
+        GetRequest('remove/food/item?foodItemId='+id)
+            .then(data => {
+                console.log(data)});
+                toast.success("Food item has been removed!", {
+                position: toast.POSITION.TOP_RIGHT
+                });
+        }
+    const donateFood = () => {
+        GetRequest("donate/food?food_id="+id+"&user_id="+userID)
+            .then(data=>{
+                console.log(data)});
+                toast.info("Food item Donated. Thankyou!", {
+                position: toast.POSITION.TOP_RIGHT
+                });
+            }
+            
+
   return (
         <div className="collections-table-row">
                     <div className="table-row-data">{slno}</div>
@@ -10,7 +43,27 @@ const InventoryTableRows = ({slno,foodName,category,quantity,consumedQuantity,up
                     <div className="table-row-data">{consumedQuantity}</div>
                     <div className="table-row-data">{updatedDate}</div>   
                     <div className="table-row-data">{expiryDate}</div>  
-                    <div className="table-row-data">{status}</div>    
+                    <div className="table-row-data">{status}</div> 
+                    <div className="table-row-data">
+                    {status !== 'expired' && status !== 'donated' && status !== 'consumed' ? (
+                        <div className='row-action'>
+                            <div className="inventory-action-btns edit-key"><FaEdit/></div>
+                            <div className="inventory-action-btns del-key" onClick={removeFood}><FaTrash/></div>
+                            <div className="inventory-action-btns donate-key" onClick={donateFood}><FaDonate/></div></div>):(
+                            <div className='row-action actions-inactive'>
+                            <div className="inventory-action-btns edit-key"><FaEdit/></div>
+                            <div className="inventory-action-btns del-key" ><FaTrash/></div>
+                            <div className="inventory-action-btns donate-key"><FaDonate/></div></div>)
+                    }
+
+                    </div>
+                    
+                    <div className="table-row-data"> {status !== 'consumed' && status !== 'expired' && status !== 'donated'? (
+                                        <div className="consume-primary-btn" onClick={consumeFood}>consume</div>):(<div className="consume-primary-btn-disabled">consume</div>) }</div>
+
+
+            <ToastContainer closeButton={false}/>
+
   
             </div>  
     )

@@ -6,28 +6,42 @@
     display: flex;
     align-items: center;
     box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
-    justify-content: space-between;
-    gap: 30px;
+    justify-content: space-evenly;
     height: 45px;
     font-weight: bold;
     opacity: 0.6;
-    padding-right: 45px;
 }
 
 .table-row-data{
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    
+    justify-content: space-evenly;
+    width:10%;
+}
+.row-action{
+   display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.actions-inactive{
+  opacity: 0.3;
+}
+.table-column-title{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 10%;
 }
 .collections-table-row{
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
     border-bottom: 1px solid #ccc; /* Add a bottom border */
     height:40px;
     gap: 30px;
-    opacity: 0.5;
+    color:gray;
 }
 
 .table-row-data-with-actions{
@@ -46,9 +60,54 @@
   padding-right: 5px;
 }
 
+.consume-primary-btn{
+  background-color: green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  border-radius: 2px;
+  padding:3px 7px;
+}
+.consume-primary-btn:hover{
+  background-color: white;
+  border: green solid 2px;
+  color: black;
+}
+
+.inventory-action-btns{
+  border-radius: 50%;
+  padding: 4px;
+  color: white;
+}
+
+.inventory-action-btns:hover{
+  color: black;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  border: 1px solid black;
+}
+.consume-primary-btn-disabled{
+  background-color: white;
+  border: grey solid 1px;
+  padding: 2px;
+  color: grey;
+}
 .collections-table-row-inactive{
     opacity: 0.5;
     color: grey;
+}
+
+.del-key{
+  background-color: black;
+}
+
+.edit-key{
+  background-color: orange;
+}
+
+.donate-key{
+  background-color: green;
 }
 
 .tooltip {

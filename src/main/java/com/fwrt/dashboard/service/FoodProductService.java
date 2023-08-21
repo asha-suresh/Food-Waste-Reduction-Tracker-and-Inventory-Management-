@@ -1,7 +1,9 @@
 package com.fwrt.dashboard.service;
 
 import com.fwrt.dashboard.dto.CategoryFoodItemCountDTO;
+import com.fwrt.dashboard.dto.InventoryAnalyticsDTO;
 import com.fwrt.dashboard.dto.ProductCreationRequest;
+import com.fwrt.dashboard.dto.StatusCountDTO;
 import com.fwrt.dashboard.entity.FoodItems;
 import com.fwrt.dashboard.entity.Notifications;
 import com.fwrt.dashboard.repository.ItemRepository;
@@ -43,6 +45,11 @@ public class FoodProductService {
         return "deleted successfully";
     }
 
+    public String removeItem(Long foodItemId) {
+        repository.deleteById(foodItemId);
+        return "deleted successfully";
+    }
+
     public List<FoodItems> viewAllFoodItems(Long userId) {
         return repository.listAllFoodItems(userId);
     }
@@ -77,23 +84,64 @@ public class FoodProductService {
             Long itemCount = (Long) result[1];
 
             switch (category) {
-                case "fruits":
+                case "Fruit":
                     dto.setFruits(itemCount);
                     break;
-                case "vegetables":
+                case "Vegetable":
                     dto.setVegetables(itemCount);
                     break;
-                case "cannedFoods":
+                case "Canned Food":
                     dto.setCannedFoods(itemCount);
                     break;
-                case "juices":
+                case "Juice":
                     dto.setJuices(itemCount);
+                    break;
+                case "Snack":
+                    dto.setSnacks(itemCount);
                     break;
                 default:
                     dto.setOthers(itemCount);
             }
         }
         return dto;
+    }
+
+    public StatusCountDTO getCountByStatus(Long userId) {
+        List<Object[]> results = repository.getStatusCounts(userId);
+
+        StatusCountDTO statusCountDTO = new StatusCountDTO();
+        if (!results.isEmpty()) {
+            Object[] result = results.get(0);
+            statusCountDTO.setSafeFoodCount((Long) result[0]);
+            statusCountDTO.setDonatedCount((Long) result[1]);
+            statusCountDTO.setConsumedCount((Long) result[2]);
+            statusCountDTO.setExpiredCount((Long) result[3]);
+            statusCountDTO.setWarningCount((Long) result[4]);
+        }
+
+        return statusCountDTO;
+
+    }
+
+    public String consumeFood(Long foodId) {
+        Optional<FoodItems> item = repository.findById(foodId);
+        item.get().setStatus("consumed");
+        item.get().setUpdatedDate(new Date(System.currentTimeMillis()));
+        repository.save(item.get());
+        return "food consumed";
+    }
+
+    public InventoryAnalyticsDTO generateFoodItemsCountAnalytics(Long userId){
+        List<FoodItems> foodItemsList = repository.listAllFoodItems(userId);
+        InventoryAnalyticsDTO inventoryAnalyticsDTO = new InventoryAnalyticsDTO();
+        inventoryAnalyticsDTO.setCountOfFoods((long) foodItemsList.size());
+
+        Long totalFoodItemsCount = 0l;
+        for(FoodItems foodItem: foodItemsList){
+            totalFoodItemsCount = totalFoodItemsCount + (foodItem.getQuantity()-foodItem.getConsumedQuantity());
+        }
+        inventoryAnalyticsDTO.setCountOfTotalFoodItems(totalFoodItemsCount);
+        return inventoryAnalyticsDTO;
     }
 
 

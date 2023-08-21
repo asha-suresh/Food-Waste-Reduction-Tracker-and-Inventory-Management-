@@ -5,12 +5,16 @@ import { Chart } from "react-google-charts";
 
 const DashboardPage = ({ setActivePath }) => {
 
+
   useEffect(() => {
     setActivePath("Dashboard");
   }, []);
 
+
+  
+
   const data = [
-    ["Year", "Sales", "Expenses"],
+    ["Year", "Consumed or Donated", "Expired or Wasted"],
     ["2004", 1000, 400],
     ["2005", 1170, 460],
     ["2006", 660, 1120],
@@ -18,7 +22,7 @@ const DashboardPage = ({ setActivePath }) => {
   ];
 
   const options = {
-    title: "Company Performance",
+    title: "Food waste Reduction",
     curveType: "function",
     legend: { position: "bottom" },
   };

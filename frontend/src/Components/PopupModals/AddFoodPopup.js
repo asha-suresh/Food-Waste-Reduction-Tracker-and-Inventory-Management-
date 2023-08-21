@@ -17,6 +17,21 @@ const AddFoodPopup = ({ isAddNewFoodModalOpen, onAddFoodPopupClose, collectionId
 
     const [showSuggestion , setShowSuggestion] = useState(false);
     const [ expiryDayCount, setExpriyDayCount] = useState();
+    const [suggestions, setSuggestions] = useState([]);
+    const foodItems = ["Apple", "Banana", "Carrot", "Chicken", "Pasta", "Pizza", "Salad", "Sushi"];
+
+    const handleInputChange = (event) => {
+    const input = event.target.value.toLowerCase();
+    const filteredItems = foodItems.filter(item => item.toLowerCase().includes(input));
+    setSuggestions(filteredItems);
+    setFoodName(input);
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    setFoodName(suggestion);
+    setSuggestions([]);
+  };
+
 
 
     const [foodName, setFoodName] = useState();
@@ -55,12 +70,11 @@ const AddFoodPopup = ({ isAddNewFoodModalOpen, onAddFoodPopupClose, collectionId
   const handleAddFoodPostRequest=()=>{
     PostRequest('http://localhost:8080/api/add/new/food?collection_id='+collectionId +'&userId='+userID, { productName: foodName,category:category,quantity:quantity,expiryDate:expiryDate })
   .then(data => {
-    console.log("food item added successfully");
-    onAddFoodPopupClose();
     toast.success("Food item Added successfully!", {
       position: toast.POSITION.TOP_RIGHT
     });
   });
+  onAddFoodPopupClose();
 }
   
   if (!isAddNewFoodModalOpen) return null;
@@ -89,8 +103,22 @@ const AddFoodPopup = ({ isAddNewFoodModalOpen, onAddFoodPopupClose, collectionId
                           name="Food Item Name"
                           placeholder="Enter Food item name"
                           className="custom-input"
-                          value={foodName} onChange={(e)=>{setFoodName(e.target.value)}} required>
+                          value={foodName} onChange={handleInputChange} required>
                           </input>
+                        {suggestions.length > 0 && (
+                                <ul className="suggestions-list">
+                                  {suggestions.map((suggestion, index) => (
+                                    <li
+                                      key={index}
+                                      onClick={() => handleSuggestionClick(suggestion)}
+                                      className="suggestion"
+                                    >
+                                      {suggestion}
+                                    </li>
+                                  ))}
+                                </ul>
+                              )}
+
                           <br/>
                   Quantity <input
                           type="text"

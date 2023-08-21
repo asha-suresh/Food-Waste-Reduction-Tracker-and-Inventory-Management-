@@ -1,15 +1,13 @@
 import './style.css'
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import Carts from './Card'
 import {FaPencilAlt } from "react-icons/fa";
 import EditCartPopup from '../PopupModals/EditCartPopup';
-import GetRequest from '../../Service/GetRequest';
 import AddFoodPopup from '../PopupModals/AddFoodPopup';
 
 
 const CollectionContainer = ({id, createdDate, items, collectionName, updatedDate }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const[collection,setcollection]=useState([]);
 
   const [isAddNewFoodModalOpen, setIsAddNewFoodModalOpen] = useState(false);
 
@@ -25,12 +23,6 @@ const CollectionContainer = ({id, createdDate, items, collectionName, updatedDat
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
-      GetRequest("view/collection?collection_id="+id)
-          .then(response=>{
-              if(response){
-                setcollection(response)
-              }
-          })
   };
 
   const handleCloseModal = () => {
@@ -57,7 +49,7 @@ const CollectionContainer = ({id, createdDate, items, collectionName, updatedDat
         <div className="cards-container">
             
         {items.map((item) => (
-                                       <Carts key={item.id} {...item}/>
+                                       <Carts key={item.id} {...item} />
                    ))}
 
                    

@@ -2,6 +2,7 @@ package com.fwrt.dashboard.controller;
 
 import com.fwrt.dashboard.dto.CategoryFoodItemCountDTO;
 import com.fwrt.dashboard.dto.ProductCreationRequest;
+import com.fwrt.dashboard.dto.StatusCountDTO;
 import com.fwrt.dashboard.entity.Collections;
 import com.fwrt.dashboard.entity.FoodItems;
 import com.fwrt.dashboard.service.FoodCollectionService;
@@ -33,9 +34,9 @@ public class FoodCollectionController {
         return foodCollectionService.viewCollectionbyId(collection_id);
     }
 
-    @GetMapping(value ="/api/remove/food/item")   //Todo: need to test
-    public String removeItemsFromCollections(@RequestParam Long foodItemId, @RequestParam Long collectionId) {
-        return foodCollectionService.removeItemsfromCollections(foodItemId,collectionId);
+    @GetMapping(value ="/api/remove/food/item")
+    public String removeItemsFromCollections(@RequestParam Long foodItemId) {
+        return foodCollectionService.removeItemsfromCollections(foodItemId);
     }
 
     @GetMapping(value ="/api/view/all/foods")
@@ -47,6 +48,18 @@ public class FoodCollectionController {
     public CategoryFoodItemCountDTO getCategoryFoodItemCount(@RequestParam Long userId) {
         CategoryFoodItemCountDTO categoryFoodItemCountList = foodCollectionService.getCategoryFoodItemCount(userId);
         return categoryFoodItemCountList;
+    }
+
+    @GetMapping("/api/food/status/analytics")
+    public StatusCountDTO getStatusCount(@RequestParam Long userId) {
+        return foodCollectionService.getCountByStatus(userId);
+    }
+
+
+
+        @GetMapping("/api/consume/food")
+    public String consumeFood(@RequestParam Long foodId) {
+        return foodCollectionService.consumeFood(foodId);
     }
 
 

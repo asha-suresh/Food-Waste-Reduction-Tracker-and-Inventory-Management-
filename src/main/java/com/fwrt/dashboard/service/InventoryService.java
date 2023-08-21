@@ -1,14 +1,12 @@
 package com.fwrt.dashboard.service;
 
+import com.fwrt.dashboard.dto.InventoryAnalyticsDTO;
 import com.fwrt.dashboard.entity.*;
 import com.fwrt.dashboard.repository.InventoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 
 @Service
@@ -50,6 +48,13 @@ public class InventoryService {
         Optional<Inventory> inventory = inventoryRepository.findById(inventoryId);
         List<Collections> collections = inventory.get().getCollections();
         return collections;
+    }
+
+    public InventoryAnalyticsDTO getInventoryAnalytics(Long userId,Long inventoryId) {
+        Optional<Inventory> inventory = inventoryRepository.findById(inventoryId);
+        InventoryAnalyticsDTO inventoryAnalyticsDTO = foodCollectionService.generateAnalytics(userId);
+        inventoryAnalyticsDTO.setCountOfTotalCollections((long) inventory.get().getCollections().size());
+        return inventoryAnalyticsDTO;
     }
 
 
