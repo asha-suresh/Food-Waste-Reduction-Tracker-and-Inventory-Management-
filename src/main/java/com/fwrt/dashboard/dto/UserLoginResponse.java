@@ -7,4 +7,5 @@ public class UserLoginResponse {
     private String userName;
     private Long userId;
     private Long inventoryId;
+    private String userRole;
 }

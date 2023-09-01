@@ -24,14 +24,6 @@ const InventoryTableRows = ({slno,id,foodName,category,quantity,consumedQuantity
                 position: toast.POSITION.TOP_RIGHT
                 });
         }
-    const donateFood = () => {
-        GetRequest("donate/food?food_id="+id+"&user_id="+userID)
-            .then(data=>{
-                console.log(data)});
-                toast.info("Food item Donated. Thankyou!", {
-                position: toast.POSITION.TOP_RIGHT
-                });
-            }
             
 
   return (
@@ -43,17 +35,15 @@ const InventoryTableRows = ({slno,id,foodName,category,quantity,consumedQuantity
                     <div className="table-row-data">{consumedQuantity}</div>
                     <div className="table-row-data">{updatedDate}</div>   
                     <div className="table-row-data">{expiryDate}</div>  
-                    <div className="table-row-data">{status}</div> 
+                    <div className="table-row-data">{status === "expired" ? (<span class="expired-info-banner"> {status}</span>) : (<span class="active-info-banner">{status}</span>) }</div> 
                     <div className="table-row-data">
                     {status !== 'expired' && status !== 'donated' && status !== 'consumed' ? (
                         <div className='row-action'>
-                            <div className="inventory-action-btns edit-key"><FaEdit/></div>
                             <div className="inventory-action-btns del-key" onClick={removeFood}><FaTrash/></div>
-                            <div className="inventory-action-btns donate-key" onClick={donateFood}><FaDonate/></div></div>):(
+                            </div>):(
                             <div className='row-action actions-inactive'>
-                            <div className="inventory-action-btns edit-key"><FaEdit/></div>
                             <div className="inventory-action-btns del-key" ><FaTrash/></div>
-                            <div className="inventory-action-btns donate-key"><FaDonate/></div></div>)
+                            </div>)
                     }
 
                     </div>

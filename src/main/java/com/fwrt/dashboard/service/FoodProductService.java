@@ -13,10 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -37,6 +35,11 @@ public class FoodProductService {
         return foodItem;
     }
 
+    public String saveFoodItem(FoodItems foodItem){
+        repository.save(foodItem);
+        return "saved successfully";
+    }
+
 
     public String removeItems(List<FoodItems> items) {
         for(FoodItems foodItem : items){
@@ -50,26 +53,45 @@ public class FoodProductService {
         return "deleted successfully";
     }
 
-    public List<FoodItems> viewAllFoodItems(Long userId) {
+    public List<FoodItems> viewAllFoodItems(Long userId, String searchFilter,String tableFilter) {
+        if(searchFilter !=null){
+            return repository.listAllFoodItemsFilterByName(userId,searchFilter);
+        }
+        if(tableFilter != null){
+            if(tableFilter.equals("all")){
+                return repository.listAllFoodItems(userId);
+            }
+            else {
+                return repository.listAllFoodItemsFilterByTableFilter(userId,tableFilter);
+            }
+        }
         return repository.listAllFoodItems(userId);
     }
 
-    public FoodItems addProduct(ProductCreationRequest request, Long Userid){
+    public FoodItems addOrEditProduct(ProductCreationRequest request, Long Userid, Long foodId){
         FoodItems foodItems = new FoodItems();
+
+        if(foodId != null){
+            foodItems = repository.findById(foodId).get();
+        }
+
         foodItems.setFoodName(request.getProductName());
         foodItems.setCategory(request.getCategory());
         foodItems.setQuantity(request.getQuantity());
-        foodItems.setExpiryDate(request.getExpiryDate());
-        foodItems.setUserId(Userid);
-        foodItems.setStatus("safe");
-        foodItems.setConsumedQuantity(0);
-        foodItems.setExpiryNotified(false);
-        foodItems.setWarningNotified(false);
 
-        foodItems.setCreatedDate(new Date());
-        foodItems.setUpdatedDate(new Date());
-        foodItems.setWarningDate(setWarningDate(foodItems.getCreatedDate(), foodItems.getExpiryDate()));
-
+        if(Userid != null){
+            if(request.getExpiryDate() != null){
+                foodItems.setExpiryDate(request.getExpiryDate());
+            }
+            foodItems.setStatus("safe");
+            foodItems.setExpiryNotified(false);
+            foodItems.setWarningNotified(false);
+            foodItems.setUserId(Userid);
+            foodItems.setConsumedQuantity(0);
+            foodItems.setCreatedDate(new Date());
+            foodItems.setUpdatedDate(new Date());
+            foodItems.setWarningDate(setWarningDate(foodItems.getCreatedDate(), foodItems.getExpiryDate()));
+        }
 
 //       repository.save(foodItems);
         return foodItems;
@@ -145,10 +167,6 @@ public class FoodProductService {
     }
 
 
-        public String updateFoodItem(FoodItems foodItems, Long quan, Long bucket, Long itemid ) {
-        return null;
-    }
-
 
     private Date setWarningDate(Date createdDate, Date expiryDate){
 
@@ -161,6 +179,36 @@ public class FoodProductService {
                 .atZone(ZoneId.systemDefault())
                 .toInstant());
     }
+
+
+
+    //data for dashboard chart
+    public List<Map<String, Object>> getDonationCountsForLastFourMonths(Long userId) {
+        List<Map<String, Object>> foodCounts = new ArrayList<>();
+
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter monthFormatter = DateTimeFormatter.ofPattern("MMMM-yyyy");
+
+        for (int i = 0; i < 4; i++) {
+            LocalDate startDate = currentDate.minusMonths(i).withDayOfMonth(1);
+            LocalDate endDate = startDate.plusMonths(1).minusDays(1);
+
+            String monthLabel = startDate.format(monthFormatter);
+            long donatedFoodCount = repository.countFoodItemsAnalyticWithinDateRange(startDate, endDate, userId,"donated");
+            long consumedFoodCount = repository.countFoodItemsAnalyticWithinDateRange(startDate, endDate, userId,"consumed");
+            long expiredFoodCount = repository.countFoodItemsAnalyticWithinDateRange(startDate, endDate,userId, "expired");
+
+            Map<String, Object> monthData = new HashMap<>();
+            monthData.put("month", monthLabel);
+            monthData.put("donatedFoodCount", donatedFoodCount+consumedFoodCount);
+            monthData.put("expiredFoodCount", expiredFoodCount);
+            foodCounts.add(monthData);
+        }
+        java.util.Collections.reverse(foodCounts); // Reverse the list
+
+        return foodCounts;
+    }
+
 
 
 }

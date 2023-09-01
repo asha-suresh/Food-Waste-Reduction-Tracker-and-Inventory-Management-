@@ -18,11 +18,11 @@ const AddFoodPopup = ({ isAddNewFoodModalOpen, onAddFoodPopupClose, collectionId
     const [showSuggestion , setShowSuggestion] = useState(false);
     const [ expiryDayCount, setExpriyDayCount] = useState();
     const [suggestions, setSuggestions] = useState([]);
-    const foodItems = ["Apple", "Banana", "Carrot", "Chicken", "Pasta", "Pizza", "Salad", "Sushi"];
+    const [foodItemsNameSuggestionList, setFoodItemsNameSuggestionList] = useState([]);
 
-    const handleInputChange = (event) => {
+  const handleInputChange = (event) => {
     const input = event.target.value.toLowerCase();
-    const filteredItems = foodItems.filter(item => item.toLowerCase().includes(input));
+    const filteredItems = foodItemsNameSuggestionList.filter(item => item.toLowerCase().includes(input));
     setSuggestions(filteredItems);
     setFoodName(input);
   };
@@ -48,11 +48,13 @@ const AddFoodPopup = ({ isAddNewFoodModalOpen, onAddFoodPopupClose, collectionId
         .then(response=>{
             if(response){
               console.log(response)
-              setCategory(response.category)
-              const parsedExpiryDate = parse(response.expiryDate, 'dd-MM-yyyy', new Date());
-              setExpiryDate(parsedExpiryDate)
-              setExpriyDayCount(response.expiryDaysCount)
-              setShowSuggestion(true)
+              if(response.expiryDate !== null){
+                setCategory(response.category)
+                const parsedExpiryDate = parse(response.expiryDate, 'dd-MM-yyyy', new Date());
+                setExpiryDate(parsedExpiryDate)
+                setExpriyDayCount(response.expiryDaysCount)
+                setShowSuggestion(true)
+              }
             }
         })
   }
@@ -64,7 +66,16 @@ const AddFoodPopup = ({ isAddNewFoodModalOpen, onAddFoodPopupClose, collectionId
     getFoodExpiryDateSuggestion();
   };
 
-  useEffect(()=>{},[setCategory,setExpiryDate]);
+  const fetchAllFoodItemsNameForSuggestion =()=>{
+    GetRequest("get/food/name/suggestion")
+        .then(response=>{
+          setFoodItemsNameSuggestionList(response);
+        })
+  }
+
+  useEffect(()=>{
+    fetchAllFoodItemsNameForSuggestion();
+  },[setCategory,setExpiryDate]);
 
 
   const handleAddFoodPostRequest=()=>{

@@ -6,10 +6,7 @@ import com.fwrt.dashboard.dto.UserRegistrationDto;
 import com.fwrt.dashboard.entity.User;
 import com.fwrt.dashboard.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -30,8 +27,13 @@ public class UserController {
         return userService.retrieveUserByUserNameAndPassword(request);
     }
 
-    @PostMapping(value ="/api/view/account")
-    public Optional<User> viewUser(@RequestParam (required = true) Long id) {
-        return userService.retriveUserById(id);
+    @GetMapping(value ="/api/view/user/details")
+    public Optional<User> viewUserDetails(@RequestParam (required = true) Long userId) {
+        return userService.retriveUserById(userId);
+    }
+
+    @GetMapping("/api/forget/password")
+    public String sendEmail(@RequestParam String emailId) {
+        return userService.forgetPassword(emailId);
     }
 }

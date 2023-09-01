@@ -1,12 +1,12 @@
 import './style.css'
 import React, {useState } from "react";
 import Carts from './Card'
-import {FaPencilAlt } from "react-icons/fa";
-import EditCartPopup from '../PopupModals/EditCartPopup';
+import {FaEye, FaPencilAlt } from "react-icons/fa";
+import ViewCollectionDetailsPopup from '../PopupModals/ViewCollectionDetailsPopup';
 import AddFoodPopup from '../PopupModals/AddFoodPopup';
 
 
-const CollectionContainer = ({id, createdDate, items, collectionName, updatedDate }) => {
+const CollectionContainer = ({id, createdDate, items, collectionName, updatedDate,onUpdate}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [isAddNewFoodModalOpen, setIsAddNewFoodModalOpen] = useState(false);
@@ -30,6 +30,7 @@ const CollectionContainer = ({id, createdDate, items, collectionName, updatedDat
   };
 
 
+
   // if (items.length === 0) {
   //   return <p>No Food Collections to display.</p>;
   // }
@@ -40,19 +41,20 @@ const CollectionContainer = ({id, createdDate, items, collectionName, updatedDat
             <div className="purchased-date"> <span style={{ fontWeight: 'bold', fontSize:'20px', marginRight:'20px'}}>{collectionName}</span>    created on {createdDate}</div>
             <div className="cart-container-right-column">
                 <div className="add-item-to-cart-btn" onClick={handleAddFoodPopupModalOpen}>Add item</div>
-                <div className="cart-edit-btn" onClick={handleOpenModal}><FaPencilAlt />  Edit</div>
+                <div className="cart-edit-btn" onClick={handleOpenModal}><FaEye />  View</div>
             </div>
             <AddFoodPopup isAddNewFoodModalOpen={isAddNewFoodModalOpen} onAddFoodPopupClose={handleAddFoodsPopupCloseModal} collectionId={id}/>
-            <EditCartPopup isOpen={isModalOpen} onClose={handleCloseModal} collectionName={collectionName} collectionid={id} createdDate={createdDate} updatedDate={updatedDate} items={items} />
+            <ViewCollectionDetailsPopup isOpen={isModalOpen} onClose={handleCloseModal} collectionName={collectionName} collectionid={id} createdDate={createdDate} updatedDate={updatedDate} items={items} />
 
         </div>
         <div className="cards-container">
-            
-        {items.map((item) => (
-                                       <Carts key={item.id} {...item} />
-                   ))}
 
-                   
+            {items === null || items.length === 0 ? (
+                                  <div className="centralise-content">No food items to display.</div>
+                                ) : (
+                                  items.map((item) => (<Carts key={item.id} {...item}  onUpdate={onUpdate}/>))
+                                )}
+            
         </div>
         <br/>
     </div>

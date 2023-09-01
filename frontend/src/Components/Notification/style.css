@@ -28,3 +28,33 @@
     top: 0; /* Slide in the drawer from the top when active */
   }
   
+  .notification-card-view{
+    width: 80%;
+    height:100px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap:30px;
+    margin-bottom: 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+    border-radius: 5px;
+  }
+
+  .notification-info-banner{
+    background-color: goldenrod;
+    width: 10px;
+    height: 100%;
+  }
+
+  .notification-title{
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  .notificaion-recieved-time{
+    font-size: 14px;
+    font-weight: lighter;
+    opacity: 0.5;
+    margin-top: 10px;
+  }

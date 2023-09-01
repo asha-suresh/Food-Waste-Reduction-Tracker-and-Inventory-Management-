@@ -28,6 +28,16 @@ public class NotificationController {
         return notificationService.viewAllUnReadNotifications(userId);
     }
 
+    @GetMapping(value ="/api/view/non/alerted/notifications")
+    public List<Notifications> viewAllNonAlertedNotifications(@RequestParam(required = true) Long userId) {
+        return notificationService.viewAllNonAlertedNotifications(userId);
+    }
+
+    @GetMapping(value ="/api/update/notification/alerted/status")
+    public String updateNotificationNonAlertedStatus(@RequestParam(required = true) Long notificationId) {
+        return notificationService.updateAlertShownStatus(notificationId);
+    }
+
 
     @GetMapping(value ="/api/update/notifications")
     public String updateNotificationReadStatus(@RequestParam(required = true) Long userId) {

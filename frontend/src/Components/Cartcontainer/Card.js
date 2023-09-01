@@ -5,20 +5,38 @@ import EditFoodItemPopup from '../PopupModals/EditFoodItemPopup';
 import GetRequest from '../../Service/GetRequest';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import FetchUserDetailsPopupForDonation from '../PopupModals/FetchUserDetailsPopupForDonation';
 
 
-const Carts = ({id,foodName,expiryDate,quantity,status}) => {
+const Carts = ({id,foodName,expiryDate,quantity,status,onRenderCollections,onUpdate,category}) => {
 
     const [isFoodItemEditPopupOpened, setIsFoodItemEditPopupOpened] = useState(false);
     const userID = localStorage.getItem("userid");
 
-  const handleOpenEditFoodItemModal = () => {
-    setIsFoodItemEditPopupOpened(true);
-  };
+    const [isUserDetailsPopupOpen, setIsUserDetailsPopupOpen] = useState(false);
 
-  const handleOpenEditFoodItemCloseModal = () => {
-    setIsFoodItemEditPopupOpened(false);
-  };
+     const handleFetchUserDetailsPopupModalOpen = () => {
+      setIsUserDetailsPopupOpen(true);
+
+     };
+ 
+     const handleFetchUserDetailsPopupCloseModal = (isDonated) => {
+      setIsUserDetailsPopupOpen(false);
+      if(isDonated){
+        toast.info("Food item Donated. Thankyou!", {
+          position: toast.POSITION.TOP_RIGHT
+        });
+      }
+      onUpdate();
+     };
+
+      const handleOpenEditFoodItemModal = () => {
+        setIsFoodItemEditPopupOpened(true);
+      };
+
+      const handleOpenEditFoodItemCloseModal = () => {
+        setIsFoodItemEditPopupOpened(false);
+      };
 
   const consumeFood=()=>{
     GetRequest('consume/food?foodId='+id)
@@ -27,7 +45,8 @@ const Carts = ({id,foodName,expiryDate,quantity,status}) => {
          toast.success("Food item has been consumed!", {
            position: toast.POSITION.TOP_RIGHT
          });
-   }
+         onUpdate();
+        }
 
    const removeFood=()=>{
     GetRequest('remove/food/item?foodItemId='+id)
@@ -36,17 +55,8 @@ const Carts = ({id,foodName,expiryDate,quantity,status}) => {
       toast.success("Food item has been removed!", {
         position: toast.POSITION.TOP_RIGHT
       });
-   }
-
-  const handleDonateFood = () => {
-      GetRequest("donate/food?food_id="+id+"&user_id="+userID)
-          .then(data=>{
-            console.log(data)});
-            toast.info("Food item Donated. Thankyou!", {
-              position: toast.POSITION.TOP_RIGHT
-            });
-          }
-
+      onUpdate();
+    }
 
   return (
         
@@ -58,7 +68,7 @@ const Carts = ({id,foodName,expiryDate,quantity,status}) => {
             <div className="button-options">
               <button className="edit-button" onClick={handleOpenEditFoodItemModal}> <FaPencilAlt/>Edit</button>
               <button className="edit-button" onClick={consumeFood}> <FaCookieBite/>Consume</button>
-              <button className="edit-button" onClick={handleDonateFood}> <FaDonate/>Donate</button>
+              <button className="edit-button" onClick={handleFetchUserDetailsPopupModalOpen}> <FaDonate/>Donate</button>
               <button className="delete-button" onClick={removeFood}><FaTrash/> Remove</button>
             </div>                </div>
             </div>
@@ -66,9 +76,10 @@ const Carts = ({id,foodName,expiryDate,quantity,status}) => {
         ):null }
 
           
-
 </div>
-<EditFoodItemPopup isEditFoodItemPopupOpen={isFoodItemEditPopupOpened} onEditFoodItemPopupClose={handleOpenEditFoodItemCloseModal} />
+<EditFoodItemPopup isEditFoodItemPopupOpen={isFoodItemEditPopupOpened} onEditFoodItemPopupClose={handleOpenEditFoodItemCloseModal}  id={id} foodName={foodName} expiryDate={expiryDate} quantity={quantity} category={category}/>
+<FetchUserDetailsPopupForDonation isUserDetailsPopupOpen={isUserDetailsPopupOpen} onUserDetailsPopupClose={handleFetchUserDetailsPopupCloseModal} foodItemId={id}/>
+
 
     <div className="cart-content">
         <div className="food-item-name">{foodName}</div>

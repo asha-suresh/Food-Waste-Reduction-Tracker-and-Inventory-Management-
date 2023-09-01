@@ -10,13 +10,48 @@ const SignupPage = () => {
   const [username,setUsername ]=useState("")
   const [password,setPassword ]=useState("")
   const [email,setEmail ]=useState("")
+  const [usernameError, setUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [emailError, setEmailError] = useState("");
 
 
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("isLoggedIn")
   );
 
+  // Validate email format
+  const isValidEmail = (email) => {
+    // Basic email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleLogin=()=>{
+    setUsernameError("");
+    setPasswordError("");
+    setEmailError("");
+    // Perform validations
+    let isValid = true;
+
+    if (!username.trim()) {
+      setUsernameError("Username is required");
+      isValid = false;
+    }
+
+    if (!email.trim()) {
+      setEmailError("Email is required");
+      isValid = false;
+    } else if (!isValidEmail(email)) {
+      setEmailError("Invalid email format");
+      isValid = false;
+    }
+
+    if (!password.trim()) {
+      setPasswordError("Password is required");
+      isValid = false;
+    }
+
+    if (isValid) {
       PostRequest('http://localhost:8080/api/create/account', { userName: username,password:password,email:email })
     .then(data => {
       PostRequest('http://localhost:8080/api/user/login', { userName: username,password:password })
@@ -25,9 +60,10 @@ const SignupPage = () => {
           localStorage.setItem("userid", data.userId);
           localStorage.setItem("inventoryid", data.inventoryId);
           localStorage.setItem("username", data.userName);
+          localStorage.setItem("role",data.userRole);
           navigate("/");
       });
-    });
+    });}
   }
 
   return (
@@ -58,30 +94,45 @@ const SignupPage = () => {
               <input
                 type="text"
                 name="username"
-                className="bottom-border"
+                className={`bottom-border ${passwordError ? "input-error" : ""}`}
                 placeholder="Username"
-                value={username} onChange={(e)=>{setUsername(e.target.value)}} required
+                value={username} onChange={(e) => {
+                  setUsername(e.target.value);
+                  setUsernameError("");
+                }} required
               ></input>
+                    {usernameError && <div className="error-message">{usernameError}</div>}
+
               <br />
               <br />
               <input
                 type="text"
                 name="Email"
-                className="bottom-border"
+                className={`bottom-border ${passwordError ? "input-error" : ""}`}
                 placeholder="Email"
-                value={email} onChange={(e)=>{setEmail(e.target.value)}} required
+                value={email} onChange={(e) => {
+                  setEmail(e.target.value);
+                  setEmailError("");
+                }} required
               ></input>
+                    {emailError && <div className="error-message">{emailError}</div>}
+
               <br />
               <br />
               <input
                 type="password"
                 name="password"
-                className="bottom-border"
+                className={`bottom-border ${passwordError ? "input-error" : ""}`}
                 placeholder="Password"
-                value={password} onChange={(e)=>{setPassword(e.target.value)}} require
+                value={password} onChange={(e) => {
+                  setPassword(e.target.value);
+                  setPasswordError("");
+                }} require
               ></input>
+                    {passwordError && <div className="error-message">{passwordError}</div>}
+
               <div className="submit-btn" onClick={handleLogin}>
-                Login
+                Create Account
               </div>
               <br />
               <div className="login-footer-text">

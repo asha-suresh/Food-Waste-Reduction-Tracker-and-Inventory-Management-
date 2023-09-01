@@ -10,7 +10,7 @@ const CollectionsCardView = ({id, createdDate, items, collectionName, updatedDat
  
      const handleAddFoodsPopupCloseModal = () => {
        setIsAddNewFoodModalOpen(false);
-       onClose();
+      
      };
 
   return (

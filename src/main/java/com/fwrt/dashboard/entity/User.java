@@ -28,9 +28,24 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "phone_no")
+    private String phoneNo;
+
+    @Column(name="house_no")
+    private String houseNo;
+
+    @Column(name="street_or_city")
+    private String streetOrCityName;
+
+    @Column(name="pin_code")
+    private String pinCode;
+
+    @Column(name="user_role")
+    private String userRole;
+
     @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="dd-MMM-yyyy")
     private Date createdDate = new Date(System.currentTimeMillis());
 
     @OneToOne

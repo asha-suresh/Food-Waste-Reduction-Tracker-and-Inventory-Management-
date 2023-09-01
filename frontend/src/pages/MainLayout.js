@@ -9,31 +9,27 @@ const MainLayout = ({activePath}) => {
 
   
   const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem("isLoggedIn")
+    localStorage.getItem("isLoggedIn") === "true"
   );
 
+  const userRole = localStorage.getItem("role");  
 
-
-  function isloggedin(){
-    if (!isLoggedIn){
-      console.log(isLoggedIn);
-      navigate("/login");
-    }
-  }
   useEffect(() => {
-    setIsLoggedIn(localStorage.getItem("isLoggedIn"));
-    isloggedin();
-  }, []);
-
+    if (!isLoggedIn) {
+      navigate("/login");
+    } else if (userRole === "admin") {
+      navigate("/admin");
+    }
+  }, [isLoggedIn, userRole, navigate]);
 
   
   return (
     <div className="main-layout">
       <Sidebar activePath={activePath} />
-      <div className="main-component">
-          <DashboardPageHeader activePath={activePath} />
-          <Outlet />
-      </div>
+            <div className="main-component">
+                  <DashboardPageHeader activePath={activePath} />
+                  <Outlet />
+            </div>
     </div>
   )
 };

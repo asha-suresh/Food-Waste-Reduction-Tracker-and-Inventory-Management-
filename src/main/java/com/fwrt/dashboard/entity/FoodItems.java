@@ -25,12 +25,12 @@ public class FoodItems {
 
     @Temporal(TemporalType.DATE)
     @Column(name="expiry_date")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="dd-MMM-yyyy")
     private Date expiryDate;
 
     @Temporal(TemporalType.DATE)
     @Column(name="warning_date")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="dd-MMM-yyyy")
     private Date warningDate;
 
     @Column(name="quantity")
@@ -41,12 +41,12 @@ public class FoodItems {
 
     @Temporal(TemporalType.DATE)
     @Column(name="updated_date")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="dd-MMM-yyyy")
     private Date updatedDate = new Date(System.currentTimeMillis());
 
     @Temporal(TemporalType.DATE)
     @Column(name="created_date")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="dd-MMM-yyyy")
     private Date createdDate = new Date(System.currentTimeMillis());
 
     @Column(name="user_id", nullable = false)

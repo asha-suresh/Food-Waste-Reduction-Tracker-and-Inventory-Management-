@@ -18,9 +18,14 @@ public class FoodCollectionController {
     FoodCollectionService foodCollectionService;
 
 
-    @PostMapping(value ="/api/add/foods")   //Todo : need to test
+    @PostMapping(value ="/api/add/foods")
     public String addFoodItemsToCollection(@RequestBody List<FoodItems> items, @RequestParam Long collection_id) {
         return foodCollectionService.addFoodItemsToCollection(items,collection_id);
+    }
+
+    @PostMapping(value ="/api/edit/food")
+    public String addFoodItemsToCollection(@RequestBody ProductCreationRequest foodItem, @RequestParam Long foodId) {
+        return foodCollectionService.editFoodItem(foodItem, foodId);
     }
 
     @PostMapping(value ="/api/add/new/food")
@@ -40,9 +45,17 @@ public class FoodCollectionController {
     }
 
     @GetMapping(value ="/api/view/all/foods")
-    public List<FoodItems> viewAllFoodItems(@RequestParam Long userId) {
-        return foodCollectionService.viewAllFoodItems(userId);
+    public List<FoodItems> viewAllFoodItems(@RequestParam Long userId, @RequestParam(required = false) String searchFilter, @RequestParam(required = false) String tableFilter) {
+        if (searchFilter != null && !searchFilter.isEmpty()) {
+            return foodCollectionService.viewAllFoodItems(userId, searchFilter, null);
+        } else if (tableFilter != null && !tableFilter.isEmpty()) {
+            //filter inventory table
+            return foodCollectionService.viewAllFoodItems(userId, null, tableFilter);
+        } else
+            //fetch all food items
+            return foodCollectionService.viewAllFoodItems(userId, null, null);
     }
+
 
     @GetMapping("/api/analytics/category")
     public CategoryFoodItemCountDTO getCategoryFoodItemCount(@RequestParam Long userId) {
@@ -55,11 +68,15 @@ public class FoodCollectionController {
         return foodCollectionService.getCountByStatus(userId);
     }
 
-
-
-        @GetMapping("/api/consume/food")
+    @GetMapping("/api/consume/food")
     public String consumeFood(@RequestParam Long foodId) {
         return foodCollectionService.consumeFood(foodId);
+    }
+
+
+    @GetMapping(value ="/api/get/food/consumption/monthly/analytics")
+    public List<Map<String, Object>> getFoodConsumptionCountsForLastFourMonths(@RequestParam Long userId) {
+        return foodCollectionService.getDonationCountsForLastFourMonths(userId);
     }
 
 

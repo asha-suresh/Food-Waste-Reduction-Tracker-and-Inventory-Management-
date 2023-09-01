@@ -4,10 +4,6 @@ import TableRowEntry from './TableRowEntry'
 
 const CollectionsQuickInfoTable = ({items}) => {
   
-  if (items === null || items.length === 0) {
-    return <p>No Food items to display.</p>;
- }
- else {
   return (
     <div className="table-container">
         <div className="table-header">
@@ -20,15 +16,16 @@ const CollectionsQuickInfoTable = ({items}) => {
 
         </div>
         <div className="table-body-content">
-        
-        
 
-        {items.map((item) => ( <TableRowEntry key={item.id} {...item}/> ))}
+            {items === null || items.length === 0 ? (
+                              <div className="centralise-content">No food items to display.</div>
+                            ) : (
+                              items.map((item) => ( <TableRowEntry key={item.id} {...item}/> ))
+                            )}
 
         </div>
     </div>
   )
-}
 }
 
 export default CollectionsQuickInfoTable

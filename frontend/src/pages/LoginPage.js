@@ -1,39 +1,51 @@
 import React, { useState } from "react";
-
-
 import { useNavigate } from "react-router-dom";
 import "./style.css";
 import LandingPageHeader from "../components/Header/LandingPageHeader";
 import PostRequest from '../Service/PostRequest'
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import GetRequest from "../Service/GetRequest";
 
 const LoginPage = () => {
   const navigate = useNavigate();
 
   const [username,setUsername ] = useState("")
   const [password,setPassword ]=useState("")
+  const [usernameError, setUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
-  const [isLoggedIn, setIsLoggedIn] = useState( localStorage.getItem("isLoggedIn"));
+  const handleLogin= async ()=>{
+      setUsernameError("");
+      setPasswordError("");
+        // Perform validations
+      let isValid = true;
 
-  const handleLogin=()=>{
-      PostRequest('http://localhost:8080/api/user/login', { userName: username,password:password })
-    .then(data => {
-        localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("userid", data.userId);
-        localStorage.setItem("inventoryid", data.inventoryId);
-        localStorage.setItem("username", data.userName);
-    })
+      if (!username.trim()) {
+        setUsernameError("Username is required");
+        isValid = false;
+      }
 
-    GetRequest("update/all/foods?userId="+localStorage.getItem("userid"))
-        .then(response=>{
-            if(response){
-              console.log("food items and all are updated")
-            }
-        })
-        navigate("/");
-  };
+      if (!password.trim()) {
+        setPasswordError("Password is required");
+        isValid = false;
+      }
+
+      if (isValid) {
+      await PostRequest('http://localhost:8080/api/user/login', { userName: username,password:password })
+      .then(data => {
+          localStorage.setItem("isLoggedIn", true);
+          localStorage.setItem("userid", data.userId);
+          localStorage.setItem("inventoryid", data.inventoryId);
+          localStorage.setItem("username", data.userName);
+          localStorage.setItem("role",data.userRole);
+      })
+      const userRole = localStorage.getItem("role");
+        if (userRole === "admin"){
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
+  }; }
 
   return (
     <>
@@ -64,20 +76,29 @@ const LoginPage = () => {
               <input
                 type="text"
                 name="username"
-                className="bottom-border"
+                className={`bottom-border ${passwordError ? "input-error" : ""}`}
                 placeholder="Username"
-                value={username} onChange={(e)=>{setUsername(e.target.value)}} required
+                value={username} onChange={(e) => {
+                  setUsername(e.target.value);
+                  setUsernameError(""); // Clear error when typing
+                }} required
               ></input>
+              {usernameError && <div className="error-message">{usernameError}</div>}
 
               <br />
               <br />
               <input
                 type="password"
                 name="password"
-                className="bottom-border"
+                className={`bottom-border ${passwordError ? "input-error" : ""}`}
                 placeholder="Password"
-                value={password} onChange={(e)=>{setPassword(e.target.value)}} require
+                value={password} onChange={(e) => {
+                  setPassword(e.target.value);
+                  setPasswordError(""); // Clear error when typing
+                }} require
               ></input>
+              {passwordError && <div className="error-message">{passwordError}</div>}
+              <span className="text-span" onClick={()=>{navigate('/forgot')}}>Forget password or username ?</span>
               
               <div className="submit-btn" onClick={handleLogin}>
                 Login

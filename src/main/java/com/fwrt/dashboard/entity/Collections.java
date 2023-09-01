@@ -24,12 +24,12 @@ public class Collections {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "updated_date")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="dd-MMM-yyyy")
     private Date updatedDate = new Date(System.currentTimeMillis());
 
     @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="dd-MMM-yyyy")
     private Date createdDate = new Date(System.currentTimeMillis());
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)

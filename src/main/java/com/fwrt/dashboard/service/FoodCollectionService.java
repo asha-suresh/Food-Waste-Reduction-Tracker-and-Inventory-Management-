@@ -9,6 +9,10 @@ import com.fwrt.dashboard.entity.Collections;
 import com.fwrt.dashboard.repository.CollectionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -41,11 +45,16 @@ public class FoodCollectionService {
         return "not saved";
     }
 
+    public String editFoodItem(ProductCreationRequest foodItem, Long foodId){
+        FoodItems food = foodProductService.addOrEditProduct(foodItem,null,foodId);
+        return foodProductService.saveFoodItem(food);
+    }
+
     public String addFoodItemsToExistingCollection(ProductCreationRequest request, Long collection_id, Long userId) {
         Optional <Collections> collections =collectionsRepository.findById(collection_id);
         if(collections!=null) {
             Set<FoodItems> foodItemsSet = collections.get().getItems();
-            FoodItems foodItems = foodProductService.addProduct(request,userId);
+            FoodItems foodItems = foodProductService.addOrEditProduct(request,userId,null);
             foodItemsSet.add(foodItems);
             collections.get().setItems(foodItemsSet);
             collectionsRepository.save(collections.get());
@@ -94,8 +103,12 @@ public class FoodCollectionService {
         return foodProductService.consumeFood(foodId);
     }
 
-    public List<FoodItems> viewAllFoodItems(Long userId) {
-        return foodProductService.viewAllFoodItems(userId);
+    public List<FoodItems> viewAllFoodItems(Long userId , String SearchFilter, String tableFilter) {
+        return foodProductService.viewAllFoodItems(userId,SearchFilter,tableFilter);
+    }
+
+    public List<Map<String, Object>> getDonationCountsForLastFourMonths(Long userId){
+        return foodProductService.getDonationCountsForLastFourMonths(userId);
     }
 
 

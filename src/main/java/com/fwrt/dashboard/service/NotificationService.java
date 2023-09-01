@@ -41,13 +41,27 @@ public class NotificationService {
         List<NotificationDto> notificationsToDisplay = new ArrayList<>();
         if(user.get().getNotifications() != null) {
             for (Notifications notifications : user.get().getNotifications()) {
-                if (notifications.getReadByUser() != true) {
-                    NotificationDto notificationDto = new NotificationDto();
-                    notificationDto.setImage("");
-                    notificationDto.setMessage(notifications.getMessage());
-                    notificationDto.setReceivedTime(notifications.getCreatedDate().toString());
-                    notificationDto.setDetailPage("/cart");
-                    notificationsToDisplay.add(notificationDto);
+                    if (notifications.getReadByUser() != true) {
+                        NotificationDto notificationDto = new NotificationDto();
+                        notificationDto.setImage("");
+                        notificationDto.setMessage(notifications.getMessage());
+                        notificationDto.setReceivedTime(notifications.getCreatedDate().toString());
+                        notificationDto.setDetailPage("/notifications");
+                        notificationsToDisplay.add(notificationDto);
+                }
+
+            }
+        }
+        return notificationsToDisplay;
+    }
+
+    public List<Notifications> viewAllNonAlertedNotifications(Long user_id){
+        Optional<User> user = userService.retriveUserById(user_id);
+        List<Notifications> notificationsToDisplay = new ArrayList<>();
+        if(user.get().getNotifications() != null) {
+            for (Notifications notifications : user.get().getNotifications()) {
+                if (notifications.getReadByUser() != true && notifications.getAlertShown() == false) {
+                    notificationsToDisplay.add(notifications);
                 }
             }
         }
@@ -66,6 +80,12 @@ public class NotificationService {
                 }
             }
         }
+        return "notification status updated";
+    }
+
+    //when alert is shown,, then the notification status should be updated.
+    public String updateAlertShownStatus(Long notificationId){
+        notificationRepository.updateNotificationAlertedStatus(notificationId);
         return "notification status updated";
     }
 
@@ -125,19 +145,34 @@ public class NotificationService {
 
     private Notifications generateExpiryDateWarningNotifications(FoodItems food, String notificationType){
         Notifications notification = new Notifications();
-        if(notificationType == "expiry"){
+        if(notificationType.equals("expiry")) {
             notification.setNotificationTitle("Expired");
             notification.setMessage("The Food item : "+ food.getFoodName() + " you bought or added on "+food.getUpdatedDate()+" is expired.");
             notification.setPriority("high");
             notification.setReadByUser(false);
+            notification.setAlertShown(false);
         }
-        if(notificationType == "warning"){
+        if(notificationType.equals("warning")) {
             notification.setNotificationTitle("Warning");
             notification.setMessage("The Food item : "+ food.getFoodName() + " you bought or added on "+food.getUpdatedDate()+" is expiring soon. Please use by before "+food.getExpiryDate());
             notification.setPriority("medium");
             notification.setReadByUser(false);
+            notification.setAlertShown(false);
         }
         return notification;
+    }
+
+    public String createNewNotification(Long userId, String message, String priority, String notificationTitle){
+        List<Notifications> notifications = new ArrayList<>();
+        Notifications notification = new Notifications();
+        notification.setNotificationTitle(notificationTitle);
+        notification.setMessage(message);
+        notification.setPriority(priority);
+        notification.setReadByUser(false);
+        notification.setAlertShown(false);
+        notifications.add(notification);
+        return userService.updateFoodItemsAndNotifications(userId,notifications);
+
     }
 
 

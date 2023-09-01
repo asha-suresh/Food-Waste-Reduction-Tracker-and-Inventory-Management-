@@ -12,9 +12,12 @@ async function PostRequest(url = '', data = {}) {
     
     if (response.status === 200) {
       return response.data;
+    } else if(response.status ===403) {
+      // for login call , if username or password not found
+      toast.error('Username or Password is incorrect.');
     } else {
       // Display a toast for non-200 response
-      toast.error('Server returned an error. Please try again later.');
+        toast.error('Server returned an error. Please try again later.');
     }
 
   } catch (error) {

@@ -25,7 +25,7 @@ public class Notifications {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "created_date")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="dd-MMM-yyyy")
     private Date createdDate = new Date(System.currentTimeMillis());
 
     @Column(name = "priority")
@@ -33,4 +33,7 @@ public class Notifications {
 
     @Column(name = "seen_by_user")
     private Boolean readByUser;
+
+    @Column(name = "alert_shown")
+    private Boolean alertShown;
 }

@@ -1,22 +1,120 @@
 .table-container{
     width: 100%;
+    background-color: white;
 }
 
 .table-header{
     display: flex;
     align-items: center;
-    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+    box-shadow: #00000014 0px 4px 12px;
     justify-content: space-evenly;
     height: 45px;
     font-weight: bold;
     opacity: 0.6;
 }
 
+.donations-table-header{
+  display: flex;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+  height: 45px;
+  font-weight: bold;
+  opacity: 0.6;
+  gap: 40px;
+  padding-left: 20px;
+}
+
+.table-header-options{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.filter-options{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: fit-content;
+}
+.table-filter{
+  padding: 2px 5px;
+  border-radius: 2px;
+  background-color: rgb(236, 236, 236);
+  border: solid 1px grey;
+}
+.active-filter{
+  border: none;
+  background-color: green;
+  color: white;
+}
 .table-row-data{
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     width:10%;
+}
+.table-row-data-slno{
+  width: 20px;
+  padding: 5px
+}
+.table-column-title-slno{
+  width: 20px;
+}
+.table-row-data-block{
+  width: 150px;
+  padding: 10px;
+  align-items: flex-start;
+}
+.donating-food-item-name{
+  font-weight: bold;
+  color: black;
+}
+.donating-food-item-quantity{
+  font-weight: bolder;
+  font-size: 16px;
+}
+.donating-food-item-category{
+  font-size: 14px;
+  opacity: 0.7;
+}
+.donated-by{
+  color: black;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap:5px;
+  justify-content: flex-start;
+}
+.donation-created-date{
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.accept-donation-btn{
+  background-color: #0074d9;
+  color: white;
+  border-radius: 3px;
+  padding:4px 15px;
+  width: fit-content;
+}
+
+.cancel-donation-btn{
+  background-color: red;
+  color: white;
+  border-radius: 3px;
+  padding:4px 15px;
+  width: fit-content;
+}
+
+.accept-donation-btn:hover{
+  color: #0074d9;
+  background-color: white;
+  border: 1px solid #0074d9;
+}
+
+.btn-inactive{
+  opacity: 0.4;
 }
 .row-action{
    display: flex;
@@ -34,13 +132,28 @@
   justify-content: space-evenly;
   width: 10%;
 }
+
+.donations-table-column-title{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 160px;
+}
 .collections-table-row{
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     border-bottom: 1px solid #ccc; /* Add a bottom border */
-    height:40px;
+    height:80px;
     gap: 30px;
+}
+
+.donations-table-row{
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ccc; /* Add a bottom border */
+    height:80px;
+    gap: 40px;
     color:gray;
 }
 
@@ -51,13 +164,32 @@
 }
 
 .table-body-content{
-    min-height: 300px;
-    height: 300px;
+    min-height: 250px;
+    height: 150px;
     overflow-y: auto;
   /* If you want to hide the horizontal scrollbar (if any) */
   overflow-x: hidden;
   /* Add padding to avoid content getting cut off by the scrollbar */
   padding-right: 5px;
+}
+.inventory-table-body-content{
+  min-height: 330px;
+  height: 330px;
+  overflow-y: auto;
+  /* If you want to hide the horizontal scrollbar (if any) */
+  overflow-x: hidden;
+  /* Add padding to avoid content getting cut off by the scrollbar */
+  padding-right: 5px;
+}
+
+.your-donation-table-body-content{
+  min-height: 100px;
+  height: 100px;
+  overflow-y: auto;
+/* If you want to hide the horizontal scrollbar (if any) */
+overflow-x: hidden;
+/* Add padding to avoid content getting cut off by the scrollbar */
+padding-right: 5px;
 }
 
 .consume-primary-btn{
@@ -110,31 +242,6 @@
   background-color: green;
 }
 
-.tooltip {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black;
-  }
-  
-  .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
-    top: -5px;
-    left: 105%;
-  }
-  
-  .tooltip:hover .tooltiptext {
-    visibility: visible;
-  }
 
   .active-info-banner{
     background-color: #ddffdd!important;
@@ -151,4 +258,32 @@
     padding: 2px 10px;
     border-radius: 3px;
 
+  }
+
+  .centralise-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60PX;
+  }
+
+  .suggestions-list-big{
+    position: absolute;
+    width: 35%;
+    max-height: 250px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;    margin: 0;
+    margin-left: 60px;
+    z-index: 999;
+  }
+
+  .food-info-table-row{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap:80px
+  }
+
+  .search-box-custom-width{
+    width: 80%;
+    margin-left: 50px;
   }
